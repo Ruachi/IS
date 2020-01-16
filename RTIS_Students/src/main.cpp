@@ -44,13 +44,14 @@ void transformationsExercise()
     // Rotate around X Matrix
     double angleInDegrees = 60;
     double thetaInRadians = Utils::degreesToRadians(angleInDegrees);
-    Matrix4x4 rotateXMatrix = Matrix4x4::rotate(angleInDegrees, Vector3D(1, 0, 0));
+    Matrix4x4 rotateXMatrix = Matrix4x4::rotate(thetaInRadians, Vector3D(1, 0, 0));
     std::cout << "The content of matrix rotateXMatrix is: \n" << std::endl;
     std::cout << rotateXMatrix << separator << std::endl;
 
     // Rotate around an arbitrary axis Matrix
     double arbitraryAngle = 30;
-    Matrix4x4 rotateArbitraryAxisMatrix = Matrix4x4::rotate(arbitraryAngle, Vector3D(1, 1, 1));
+    double arbitraryAngleRadians = Utils::degreesToRadians(arbitraryAngle);
+    Matrix4x4 rotateArbitraryAxisMatrix = Matrix4x4::rotate(arbitraryAngleRadians, Vector3D(1, 1, 1));
     std::cout << "The content of matrix rotateArtitraryAxisMatrix is: \n" << std::endl;
     std::cout << rotateArbitraryAxisMatrix << separator << std::endl;
 
