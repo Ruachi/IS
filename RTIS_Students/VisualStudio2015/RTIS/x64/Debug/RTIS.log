@@ -1,6 +1,6 @@
 ﻿  main.cpp
-C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(192,15): warning C4101: 'B': unreferenced local variable
-C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(190,16): warning C4101: 'roots': unreferenced local variable
-C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(192,12): warning C4101: 'A': unreferenced local variable
-C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(192,18): warning C4101: 'C': unreferenced local variable
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(233,15): warning C4101: 'B': unreferenced local variable
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(231,16): warning C4101: 'roots': unreferenced local variable
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(233,12): warning C4101: 'A': unreferenced local variable
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(233,18): warning C4101: 'C': unreferenced local variable
   RTIS.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students\VisualStudio2015\x64\Debug\RTIS.exe

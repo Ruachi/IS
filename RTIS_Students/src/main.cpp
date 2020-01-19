@@ -170,12 +170,53 @@ void filteringAnImageExercise()
     // Declare here your filter-related variables
     // (e.g., FILTER SIZE)
     //(...)
-
     // Implement here your image filtering algorithm
-    //(...)
+    //We will do the average of a 3x3 field like the one on the assignment
+
+    for (int lin = 0; lin < resX; lin++)
+    {
+        for (int col = 0; col < resY; col++)
+        {
+            if ((col - 1) > 0 && (lin - 1) > 0 && (col + 1) < resY && (lin + 1) < resX) {
+                Vector3D a = f1.getPixelValue(col - 1, lin - 1);
+                Vector3D b = f1.getPixelValue(col, lin - 1);
+                Vector3D c = f1.getPixelValue(col + 1, lin - 1);
+                Vector3D d = f1.getPixelValue(col - 1, lin);
+                Vector3D f = f1.getPixelValue(col + 1, lin);
+                Vector3D g = f1.getPixelValue(col - 1, lin + 1);
+                Vector3D h = f1.getPixelValue(col, lin + 1);
+                Vector3D i = f1.getPixelValue(col + 1, lin + 1);
+                Vector3D e = (f1.getPixelValue(col, lin) + a + b + c + d + f + g + h + i) / 9;
+                f2.setPixelValue(col, lin, e);
+            }
+        }
+    }
+
+    for (int x = 0; x < 99; x++) 
+    {
+        for (int lin = 0; lin < resX; lin++)
+        {
+            for (int col = 0; col < resY; col++)
+            {
+                if ((col - 1) > 0 && (lin - 1) > 0 && (col + 1) < resY && (lin + 1) < resX) {
+                    Vector3D a = f2.getPixelValue(col - 1, lin - 1);
+                    Vector3D b = f2.getPixelValue(col, lin - 1);
+                    Vector3D c = f2.getPixelValue(col + 1, lin - 1);
+                    Vector3D d = f2.getPixelValue(col - 1, lin);
+                    Vector3D f = f2.getPixelValue(col + 1, lin);
+                    Vector3D g = f2.getPixelValue(col - 1, lin + 1);
+                    Vector3D h = f2.getPixelValue(col, lin + 1);
+                    Vector3D i = f2.getPixelValue(col + 1, lin + 1);
+                    Vector3D e = (f2.getPixelValue(col, lin) + a + b + c + d + f + g + h + i) / 9;
+                    f2.setPixelValue(col, lin, e);
+                }
+            }
+        }
+    }
+    
 
     // DO NOT FORGET TO SAVE YOUR IMAGE!
-    //(...)
+    f2.save();
 }
 
 void completeSphereClassExercise()
@@ -242,7 +283,7 @@ int main()
     transformationsExercise();
     normalTransformExercise();
     paintingAnImageExercise();
-    //filteringAnImageExercise();
+    filteringAnImageExercise();
 
     // ASSIGNMENT 2
     //eqSolverExercise();
