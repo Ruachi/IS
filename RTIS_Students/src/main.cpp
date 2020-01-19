@@ -125,18 +125,20 @@ void paintingAnImageExercise()
     resX = 512;
     resY = 512;
     Film film(resX, resY);
+    
 
     for(unsigned int col = 0; col < resX; col++)
         {
             for(unsigned int row = 0; row < resY; row++)
             {
-                Vector3D color(255, 0, 0);
+                Vector3D color((col + 0.5) / resX, (row + 0.5) / resY, 0);
                 film.setPixelValue(col, row, color);
             }
         }
 
     // Save the final result to file
     film.save();
+
 }
 
 void filteringAnImageExercise()
