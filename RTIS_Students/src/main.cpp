@@ -172,48 +172,37 @@ void filteringAnImageExercise()
     //(...)
     // Implement here your image filtering algorithm
     //We will do the average of a 3x3 field like the one on the assignment
+    
+    int nFilter = 3;
+    int offset = nFilter / 2;
+    int multiple = nFilter * nFilter;
+    Film* inputImage = &f1;
+    Film* outputImage = &f2;
+    Vector3D averageSum = Vector3D();
 
-    for (int lin = 0; lin < resX; lin++)
+    for (int i = 0; i < 100; i++)
     {
-        for (int col = 0; col < resY; col++)
+        for (int lin = 0; lin < resX - 1; lin++)
         {
-            if ((col - 1) > 0 && (lin - 1) > 0 && (col + 1) < resY && (lin + 1) < resX) {
-                Vector3D a = f1.getPixelValue(col - 1, lin - 1);
-                Vector3D b = f1.getPixelValue(col, lin - 1);
-                Vector3D c = f1.getPixelValue(col + 1, lin - 1);
-                Vector3D d = f1.getPixelValue(col - 1, lin);
-                Vector3D f = f1.getPixelValue(col + 1, lin);
-                Vector3D g = f1.getPixelValue(col - 1, lin + 1);
-                Vector3D h = f1.getPixelValue(col, lin + 1);
-                Vector3D i = f1.getPixelValue(col + 1, lin + 1);
-                Vector3D e = (f1.getPixelValue(col, lin) + a + b + c + d + f + g + h + i) / 9;
-                f2.setPixelValue(col, lin, e);
-            }
-        }
-    }
-
-    for (int x = 0; x < 99; x++) 
-    {
-        for (int lin = 0; lin < resX; lin++)
-        {
-            for (int col = 0; col < resY; col++)
+            for (int col = 0; col < resY - 1; col++)
             {
-                if ((col - 1) > 0 && (lin - 1) > 0 && (col + 1) < resY && (lin + 1) < resX) {
-                    Vector3D a = f2.getPixelValue(col - 1, lin - 1);
-                    Vector3D b = f2.getPixelValue(col, lin - 1);
-                    Vector3D c = f2.getPixelValue(col + 1, lin - 1);
-                    Vector3D d = f2.getPixelValue(col - 1, lin);
-                    Vector3D f = f2.getPixelValue(col + 1, lin);
-                    Vector3D g = f2.getPixelValue(col - 1, lin + 1);
-                    Vector3D h = f2.getPixelValue(col, lin + 1);
-                    Vector3D i = f2.getPixelValue(col + 1, lin + 1);
-                    Vector3D e = (f2.getPixelValue(col, lin) + a + b + c + d + f + g + h + i) / 9;
-                    f2.setPixelValue(col, lin, e);
+                if ((col - offset) > 0 && (col + offset) < resX && (lin - offset) > 0 && (lin + offset) < resY)
+                {
+                    for (int x = col - offset; x <= col + offset; x++)
+                    {
+                        for (int y = lin - offset; y <= lin + offset; y++)
+                        {
+                            averageSum += inputImage->getPixelValue(x, y);
+                        }
+                    }
+                    averageSum = averageSum / multiple;
+                    outputImage->setPixelValue(col, lin, averageSum);
+                    averageSum = Vector3D(0, 0, 0);
                 }
             }
         }
+        inputImage = outputImage;
     }
-    
 
     // DO NOT FORGET TO SAVE YOUR IMAGE!
     f2.save();
@@ -282,7 +271,7 @@ int main()
     // ASSIGNMENT 1
     transformationsExercise();
     normalTransformExercise();
-    paintingAnImageExercise();
+    //paintingAnImageExercise();
     filteringAnImageExercise();
 
     // ASSIGNMENT 2
