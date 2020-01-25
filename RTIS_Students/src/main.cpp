@@ -211,7 +211,18 @@ void filteringAnImageExercise()
 void completeSphereClassExercise()
 {
     // Make your intersection tests here
-    // (....)
+    Vector3D p(0, 0, 3);
+    Matrix4x4 objectToWorld = Matrix4x4::translate(p);
+    Ray r1 = Ray(Vector3D(), Vector3D(0, 0, 1));
+    Ray r2 = Ray(Vector3D(), Vector3D(0, 1, 0));
+    Sphere* s = new Sphere(1, objectToWorld);
+
+    std::cout << s << std::endl;
+    std::cout << s->toString() << std::endl;
+
+    std::cout << s->rayIntersectP(r1) << std::endl;
+    std::cout << s->rayIntersectP(r2) << std::endl;
+    
 }
 
 void eqSolverExercise()
@@ -222,9 +233,12 @@ void eqSolverExercise()
     double A, B, C;
 
     // (...)
+    A = 5;
+    B = 2;
+    C = 1;
 
 	bool hasRoots = true;
-    //bool hasRoots = solver.rootQuadEq(A, B, C, roots);
+    hasRoots = solver.rootQuadEq(A, B, C, roots);
 
     if(!hasRoots)
     {
@@ -233,7 +247,8 @@ void eqSolverExercise()
     else
     {
         // SHOW THE SOLUTIONS OF THE EQUATION
-        // (...)
+        std::cout << "First value: " << roots.values[0] << std::endl;
+        std::cout << "Second value: " << roots.values[1] << std::endl;
     }
 }
 
@@ -245,12 +260,34 @@ void raytrace()
     resY = 512;
     Film film(resX, resY);
 
+    Vector3D p(0, 0, 3);
+    Matrix4x4 objectToWorld = Matrix4x4::translate(p);
+    Sphere* s = new Sphere(1, objectToWorld);
+
+    std::cout << s->toString() << std::endl;
+
     /* ******************* */
     /* Orthographic Camera */
     /* ******************* */
     Matrix4x4 cameraToWorld; // By default, this gives an ID transform
                              // meaning that the camera space = world space
     OrtographicCamera camOrtho(cameraToWorld, film);
+
+    for (int y = 0; y < resY; y++)
+    {
+        for (int x = 0; x < resX; x++)
+        {
+            Ray r = camOrtho.generateRay(x, y);
+            if (s->rayIntersectP(r))
+            {
+                film.setPixelValue(x, y, Vector3D(1, 0, 0));
+            }
+            else
+            {
+                film.setPixelValue(x, y, Vector3D(0, 0, 0));
+            }
+        }
+    }
 
     /* ******************* */
     /* Perspective Camera */
@@ -269,15 +306,15 @@ int main()
     std::cout << separator << "RTIS - Ray Tracer for \"Imatge Sintetica\"" << separator << std::endl;
 
     // ASSIGNMENT 1
-    transformationsExercise();
-    normalTransformExercise();
+    //transformationsExercise();
+    //normalTransformExercise();
     //paintingAnImageExercise();
-    filteringAnImageExercise();
+    //filteringAnImageExercise();
 
     // ASSIGNMENT 2
     //eqSolverExercise();
     //completeSphereClassExercise();
-    //raytrace();
+    raytrace();
 
     std::cout << getchar();
     std::cout << "\n\n" << std::endl;

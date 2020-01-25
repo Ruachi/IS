@@ -25,8 +25,9 @@ Ray OrtographicCamera::generateRay(const double u, const double v) const
     Vector3D rOrig = ndcToCameraSpace(u, v);
 
     // COMPLETE THE REST OF THE FUNCTION
+    Vector3D rOrigTransformed = cameraToWorld.transformPoint(rOrig);
 
     // Make sure the ray is normalized!
 
-    return Ray();
+    return Ray(rOrigTransformed.normalized(), Vector3D(0, 0, 1).normalized());
 }
