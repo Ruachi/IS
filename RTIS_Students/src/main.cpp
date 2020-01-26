@@ -260,24 +260,26 @@ void raytrace()
     resY = 512;
     Film film(resX, resY);
 
+    //here we create the sphere with the appropiate translation
     Vector3D p(0, 0, 3);
     Matrix4x4 objectToWorld = Matrix4x4::translate(p);
     Sphere* s = new Sphere(1, objectToWorld);
 
-    std::cout << s->toString() << std::endl;
+    std::cout << s->toString() << std::endl;    //verify the sphere is appropiately placed
 
     /* ******************* */
     /* Orthographic Camera */
     /* ******************* */
     Matrix4x4 cameraToWorld; // By default, this gives an ID transform
                              // meaning that the camera space = world space
+    
     OrtographicCamera camOrtho(cameraToWorld, film);
 
-    for (int y = 0; y < resY; y++)
+    for (double y = 0; y < resY; y++)
     {
-        for (int x = 0; x < resX; x++)
+        for (double x = 0; x < resX; x++)
         {
-            Ray r = camOrtho.generateRay(x, y);
+            Ray r = camOrtho.generateRay(x / resX, y / resY);
             if (s->rayIntersectP(r))
             {
                 film.setPixelValue(x, y, Vector3D(1, 0, 0));
@@ -288,12 +290,32 @@ void raytrace()
             }
         }
     }
+    
 
     /* ******************* */
     /* Perspective Camera */
     /* ******************* */
+
+    
     double fovRadians = Utils::degreesToRadians(60);
     PerspectiveCamera camPersp(cameraToWorld, fovRadians, film);
+
+    for (double y = 0; y < resY; y++)
+    {
+        for (double x = 0; x < resX; x++)
+        {
+            Ray r = camPersp.generateRay(x / resX, y / resY);
+            if (s->rayIntersectP(r))
+            {
+                film.setPixelValue(x, y, Vector3D(1, 0, 0));
+            }
+            else
+            {
+                film.setPixelValue(x, y, Vector3D(0, 0, 0));
+            }
+        }
+    }
+    
 
     // Save the final result to file
     film.save();

@@ -23,11 +23,13 @@ Ray OrtographicCamera::generateRay(const double u, const double v) const
 {
     // Convert the from ndc to camera coordinates
     Vector3D rOrig = ndcToCameraSpace(u, v);
+    Vector3D rVector = Vector3D(0, 0, 1);
 
     // COMPLETE THE REST OF THE FUNCTION
     Vector3D rOrigTransformed = cameraToWorld.transformPoint(rOrig);
+    Vector3D rVectorTransformed = cameraToWorld.transformVector(Vector3D(0, 0, 1)).normalized();
 
     // Make sure the ray is normalized!
 
-    return Ray(rOrigTransformed.normalized(), Vector3D(0, 0, 1).normalized());
+    return Ray(rOrigTransformed, rVector);
 }

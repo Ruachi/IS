@@ -14,6 +14,8 @@ bool Sphere::rayIntersectP(const Ray &ray) const
     // The ray-sphere intersection equation can be expressed in the
     // form A*t^2 + B*t + C = 0, where:
 
+    Vector3D oc = ray.o - r.o;
+
     double A = dot(r.d, r.d);
     double B = 2 * dot(r.d, r.o);
     double C = dot(r.o, r.o) - sqrt(this->radius);
