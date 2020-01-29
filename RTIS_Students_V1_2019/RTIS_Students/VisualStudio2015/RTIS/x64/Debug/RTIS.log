@@ -1,0 +1,25 @@
+﻿  camera.cpp
+  ortographic.cpp
+  perspective.cpp
+  bitmap.cpp
+  eqsolver.cpp
+  film.cpp
+  matrix4x4.cpp
+  ray.cpp
+  tester.cpp
+  utils.cpp
+  vector3d.cpp
+  main.cpp
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(285,39): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(285,36): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(289,39): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(289,36): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(310,39): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(310,36): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(314,39): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students\src\main.cpp(314,36): warning C4244: 'argument': conversion from 'double' to 'size_t', possible loss of data
+  shape.cpp
+  sphere.cpp
+  Generating Code...
+  LINK : C:\Users\david\Desktop\IS\RTIS_Students\VisualStudio2015\x64\Debug\RTIS.exe not found or not built by the last incremental link; performing full link
+  RTIS.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students\VisualStudio2015\x64\Debug\RTIS.exe
