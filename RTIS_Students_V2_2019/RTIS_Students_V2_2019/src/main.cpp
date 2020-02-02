@@ -15,6 +15,9 @@
 
 #include "shaders/intersectionshader.h"
 #include "shaders/depthshader.h"
+#include "shaders/directshader.h"
+
+#include "materials/phong.h"
 
 void buildSceneSphere(Camera* &cam, Film* &film,
                       std::vector<Shape*>* &objectsList,
@@ -48,7 +51,10 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     // Define and place a sphere
     Matrix4x4 sphereTransform1;
     sphereTransform1 = sphereTransform1.translate(Vector3D(-1.0, -0.5, 2*std::sqrt(2.0)));
-    Shape *s1 = new Sphere (0.25, sphereTransform1, NULL);
+
+    Phong *p = new Phong(Vector3D(1, 1, 1), Vector3D(1, 1, 1), Vector3D(1, 1, 1), 50);
+    
+    Shape *s1 = new Sphere (0.25, sphereTransform1, p);
 
     // Define and place a sphere
     Matrix4x4 sphereTransform2;
@@ -129,6 +135,7 @@ int main()
     Vector3D intersectionColor(1,0,0);
     //Shader *shader = new IntersectionShader (intersectionColor, bgColor);
 	Shader *shader = new DepthShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
+    Shader *directShader = new DirectShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
 
     // Declare pointers to all the variables which describe the scene
     Camera *cam;
@@ -139,7 +146,7 @@ int main()
     buildSceneSphere(cam, film, objectsList, lightSourceList);
 
     // Launch some rays!
-    raytrace(cam, shader, film, objectsList, lightSourceList);
+    raytrace(cam, directShader, film, objectsList, lightSourceList);
 
     // Save the final result to file
     std::cout << "\n\nSaving the result to file output.bmp\n" << std::endl;
