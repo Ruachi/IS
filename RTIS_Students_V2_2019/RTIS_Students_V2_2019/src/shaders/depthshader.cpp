@@ -14,7 +14,6 @@ Vector3D DepthShader::computeColor(const Ray &r, const std::vector<Shape *> &obj
     {
 		Vector3D finalPoint = its.itsPoint;
 		Vector3D startPoint = r.o;
-		//double depth = sqrt((startPoint.x - finalPoint.x)*(startPoint.x - finalPoint.x) + (startPoint.y - finalPoint.y)*(startPoint.y - finalPoint.y));
 		double depth = (finalPoint - startPoint).length();
 
 		if (depth >= maxDist) 

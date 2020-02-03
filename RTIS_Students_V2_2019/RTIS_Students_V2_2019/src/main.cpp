@@ -115,10 +115,10 @@ void raytrace(Camera* &cam, Shader* &shader, Film* &film,
             Ray cameraRay = cam->generateRay(x, y);
 
             // Compute ray color according to the used shader
-            Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList );
+            //Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList );
 
             // Store the pixel color
-            film->setPixelValue(col, lin, pixelColor);
+            //film->setPixelValue(col, lin, pixelColor);
         }
     }
 }
