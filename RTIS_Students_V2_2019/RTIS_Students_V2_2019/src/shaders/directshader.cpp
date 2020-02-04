@@ -11,7 +11,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
     const std::vector<PointLightSource>& lsList) const
 {
     int nL = lsList.size();
-    Vector3D finalColor = color;
+    Vector3D finalColor;
 
     Intersection its;
     if (Utils::getClosestIntersection(r, objList, its))
@@ -23,7 +23,8 @@ Vector3D DirectShader::computeColor(const Ray& r,
         {
             Vector3D dir = its.itsPoint - lsList.at(i).getPosition();
 
-            Vector3D aux =  dot(dot(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(normal, wo , dir)), 1);
+            //Vector3D aux =  dot(dot(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(normal, wo , dir)), 1);
+            Vector3D aux = Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(normal, wo, dir));
             
             finalColor += aux;
             //finalColor = Vector3D(color.x + aux.x, color.y + aux.y, color.z + aux.z);

@@ -59,12 +59,12 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     // Define and place a sphere
     Matrix4x4 sphereTransform2;
     sphereTransform2 = sphereTransform2.translate(Vector3D(1.0, 0.0, 6));
-    Shape *s2 = new Sphere (1, sphereTransform2, NULL);
+    Shape *s2 = new Sphere (1, sphereTransform2, p);
 
     // Define and place a sphere
     Matrix4x4 sphereTransform3;
     sphereTransform3 = sphereTransform3.translate(Vector3D(0.3, -0.75, 3.5));
-    Shape *s3 = new Sphere (0.25, sphereTransform3, NULL);
+    Shape *s3 = new Sphere (0.25, sphereTransform3, p);
 
     // Store the objects in the object list
     objectsList->push_back(s1);
@@ -81,9 +81,8 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     //
     // DO NOT FORGET TO STORE THE LIGHT SOURCES IN THE "lightSourceList"
     PointLightSource *light = new PointLightSource(Vector3D(1.0,0.0,0.0),Vector3D(0.5,0.5,0.5));
-
-
-    //lightSourceList->push_back(*light);
+    lightSourceList = new std::vector<PointLightSource>;
+    lightSourceList->push_back(*light);
 
     //
 }
@@ -115,10 +114,10 @@ void raytrace(Camera* &cam, Shader* &shader, Film* &film,
             Ray cameraRay = cam->generateRay(x, y);
 
             // Compute ray color according to the used shader
-            //Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList );
+            Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList );
 
             // Store the pixel color
-            //film->setPixelValue(col, lin, pixelColor);
+            film->setPixelValue(col, lin, pixelColor);
         }
     }
 }
