@@ -34,11 +34,12 @@ bool Phong::hasDiffuseOrGlossy() const
 Vector3D Phong::getReflectance(const Vector3D& n, const Vector3D& wo,
     const Vector3D& wi) const
 {
-    Vector3D rd, rs;
-    Vector3D wr = n*dot(n, wi)*2 - wi;
-    rd = kd*dot(wi, n);
-    rs = dot(s, pow(dot(wo, wr), s));
-    return rd;
+    Vector3D rd, rs, wr;
+
+    rd = cross(this->kd, wo);
+    wr = n * 2 * dot(n, wi) - wi;
+    rs = dot(ks, pow(dot(wo, wr), s));
+    return rs + rd;
 }
 
 double Phong::getIndexOfRefraction() const
