@@ -19,10 +19,9 @@ Vector3D DirectShader::computeColor(const Ray& r,
 
         for (size_t i = 0; i < nL; i++)
         {
-            Vector3D wi = its.itsPoint - lsList.at(i).getPosition();
-            Vector3D wo = Utils::computeReflectionDirection(wi, its.normal);
+            Vector3D wi = its.itsPoint - lsList.at(i).getPosition(); //point to light direction
+            Vector3D wo = r.o - its.itsPoint;    //point to cam direction
 
-            //Vector3D aux =  dot(dot(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(normal, wo , dir)), 1);
             Vector3D aux = Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(its.normal, wo, wi));
             
             finalColor += aux;

@@ -52,7 +52,7 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     Matrix4x4 sphereTransform1;
     sphereTransform1 = sphereTransform1.translate(Vector3D(-1.0, -0.5, 2*std::sqrt(2.0)));
 
-    Phong *p = new Phong(Vector3D(1, 0, 1), Vector3D(0.1, 0.1, 0.1), Vector3D(0.1, 0.1, 0.1), 1);
+    Phong *p = new Phong(Vector3D(0.1, 0.3, 0.1), Vector3D(0.3, 0.5, 0.0), Vector3D(0.5, 0.5, 0.5), 50);
     
     Shape *s1 = new Sphere (0.25, sphereTransform1, p);
 
@@ -80,7 +80,7 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     // (...)
     //
     // DO NOT FORGET TO STORE THE LIGHT SOURCES IN THE "lightSourceList"
-    PointLightSource *light = new PointLightSource(Vector3D(0.0,0.0,0.0),Vector3D(0.1, 0.1, 0.1));
+    PointLightSource *light = new PointLightSource(Vector3D(1.0,0.0,0.0),Vector3D(0.1, 0.1, 0.1));
     lightSourceList = new std::vector<PointLightSource>;
     lightSourceList->push_back(*light);
 

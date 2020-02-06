@@ -2,6 +2,7 @@
 #define PHONG
 
 #include "../core/vector3d.h"
+#include "../core/utils.h"
 #include "material.h"
 
 class Phong : public Material

@@ -1,12 +1,11 @@
 #include "phong.h"
-
 #include <iostream>
 
 Phong::Phong(Vector3D ka_, Vector3D kd_, Vector3D ks_, float s_)
 {
     ka = ka_;
-    kd = kd_;
-    ks = ks_;
+    kd = kd_;   //diffuse
+    ks = ks_;   //specular
     s = s_;
 }
 
@@ -36,10 +35,10 @@ Vector3D Phong::getReflectance(const Vector3D& n, const Vector3D& wo,
 {
     Vector3D rd, rs, wr;
 
-    rd = cross(this->kd, wo);
-    wr = n * 2 * dot(n, wi) - wi;
-    rs = dot(ks, pow(dot(wo, wr), s));
-    return rs + rd;
+    rd = kd * dot(wi, n); // Utils::multiplyPerCanal(this->kd, wo);
+    wr = Utils::computeReflectionDirection(wi, n);
+    rs = ks * pow(dot(-rd, wr), s);
+    return rd;
 }
 
 double Phong::getIndexOfRefraction() const
