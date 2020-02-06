@@ -38,7 +38,7 @@ Vector3D Phong::getReflectance(const Vector3D& n, const Vector3D& wo,
     rd = kd * dot(wi, n); // Utils::multiplyPerCanal(this->kd, wo);
     wr = Utils::computeReflectionDirection(wi, n);
     rs = ks * pow(dot(-rd, wr), s);
-    return rd;
+    return rd + rs;
 }
 
 double Phong::getIndexOfRefraction() const
