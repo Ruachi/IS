@@ -52,7 +52,7 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     Matrix4x4 sphereTransform1;
     sphereTransform1 = sphereTransform1.translate(Vector3D(-1.0, -0.5, 2*std::sqrt(2.0)));
 
-    Phong *p = new Phong(Vector3D(0.1, 0.3, 0.1), Vector3D(0.3, 0.5, 0.0), Vector3D(0.5, 0.5, 0.5), 50);
+    Phong *p = new Phong(Vector3D(1, 0.0, 0.1), Vector3D(0.3, 0.5, 0.0), Vector3D(0.5, 0.5, 0.5), 50);
     
     Shape *s1 = new Sphere (0.25, sphereTransform1, p);
 
@@ -138,7 +138,7 @@ int main()
     Vector3D intersectionColor(1,0,0);
     //Shader *shader = new IntersectionShader (intersectionColor, bgColor);
 	Shader *shader = new DepthShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
-    Shader *directShader = new DirectShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
+    Shader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
 
     // Declare pointers to all the variables which describe the scene
     Camera *cam;

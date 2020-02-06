@@ -19,25 +19,23 @@ Vector3D DirectShader::computeColor(const Ray& r,
 
         for (size_t i = 0; i < nL; i++)
         {
-            Vector3D wi = its.itsPoint - lsList.at(i).getPosition(); //point to light direction
+            Vector3D wi = lsList.at(i).getPosition() - its.itsPoint; //point to light direction
 
             Vector3D wo = -r.d;    //point to cam direction
 
-            //Ray *vi = new Ray(lsList.at(i).getPosition, wi);
-            Ray vi = Ray(lsList.at(i).getPosition(), wi);
+            Vector3D d = lsList.at(i).getPosition() - its.itsPoint;
+
+            Ray vi = Ray(its.itsPoint, d);
             int visibility;
 
-            Intersection auxiliar;
-            Utils::getClosestIntersection(vi, objList, auxiliar);
-
-            if (auxiliar.itsPoint.x != its.itsPoint.x || auxiliar.itsPoint.y != its.itsPoint.y || auxiliar.itsPoint.z != its.itsPoint.z)
+            if (Utils::hasIntersection(vi, objList))
             {
                 visibility = 0;
             }
-            else {
+            else 
+            {
                 visibility = 1;
             }
-
 
             Vector3D aux = Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(its.normal, wo, wi) * visibility);
             
@@ -46,7 +44,4 @@ Vector3D DirectShader::computeColor(const Ray& r,
         return color + finalColor;
     }
     return bgColor;
-
-
-
 }
