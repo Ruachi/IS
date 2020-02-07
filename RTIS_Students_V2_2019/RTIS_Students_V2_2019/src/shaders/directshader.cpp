@@ -23,25 +23,25 @@ Vector3D DirectShader::computeColor(const Ray& r,
 
             Vector3D wo = -r.d;    //point to cam direction
 
-            Vector3D d = lsList.at(i).getPosition() - its.itsPoint;
+            float d = wi.length();
+			wi = wi.normalized();
 
-            Ray vi = Ray(its.itsPoint, d);
-            int visibility;
+			// CHECK IF LIGHT BELOW SURFACE
+			double angle = dot(wi,its.normal);
 
-            if (Utils::hasIntersection(vi, objList))
-            {
-                visibility = 0;
-            }
-            else 
-            {
-                visibility = 1;
-            }
+			if (angle > 0)
+			{
+				Ray shadowRay = Ray(its.itsPoint, wi);
+				shadowRay.maxT = d;
 
-            Vector3D aux = Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(its.normal, wo, wi) * visibility);
-            
-            finalColor += aux;
+				if (!Utils::hasIntersection(shadowRay, objList))
+				{
+					Vector3D aux = Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint), its.shape->getMaterial().getReflectance(its.normal, wo, wi));
+					finalColor += (aux);
+				}
+			}
         }
-        return color + finalColor;
+        return finalColor;
     }
     return bgColor;
 }

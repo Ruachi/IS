@@ -36,15 +36,14 @@ Vector3D Phong::getReflectance(const Vector3D& n, const Vector3D& wo,
     Vector3D rd, rs, wr;
 
     rd = kd * dot(wi, n);
-    wr = Utils::computeReflectionDirection(wi, n);
-    rs = ks * pow(dot(wo, wr), s);
-    return  rd + rs;
+    wr = Utils::computeReflectionDirection(-wo, n);
+    rs = ks * pow(std::fmax(0, dot(wi, wr)), s);
+	return  rs+rd;
 }
 
 double Phong::getIndexOfRefraction() const
 {
     std::cout << "Warning! Calling \"Material::getIndexOfRefraction()\" for a non-transmissive material"
               << std::endl;
-
     return -1;
 }
