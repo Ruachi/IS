@@ -45,3 +45,11 @@ Vector3D DirectShader::computeColor(const Ray& r,
     }
     return bgColor;
 }
+
+bool DirectShader::hasSpecular() {
+    
+}
+
+bool DirectShader::hasDiffuseOrGlossy() {
+    
+}
