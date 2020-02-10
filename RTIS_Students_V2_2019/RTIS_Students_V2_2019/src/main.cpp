@@ -9,6 +9,7 @@
 #include "core/utils.h"
 
 #include "shapes/sphere.h"
+#include "shapes/infiniteplane.h"
 
 #include "cameras/ortographic.h"
 #include "cameras/perspective.h"
@@ -53,23 +54,30 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     sphereTransform1 = sphereTransform1.translate(Vector3D(-1.0, -0.5, 2*std::sqrt(2.0)));
 
     Phong *p = new Phong(Vector3D(1, 0.0, 0.1), Vector3D(0.3, 0.5, 0.0), Vector3D(0.5, 0.5, 0.5), 50);
+    Material* green_50 = new Phong(Vector3D(1.0, 1.0, 1.0), Vector3D(0.2, 0.7, 0.3), Vector3D(0.2, 0.6, 0.2), 50);
+    Material* red = new Phong(Vector3D(1.0, 1.0, 1.0), Vector3D(0.7, 0.2, 0.3), Vector3D(0.4, 0.2, 0.2), 30);
+    Material* greyDiffuse = new Phong(Vector3D(1.0, 1.0, 1.0), Vector3D(0.8, 0.8, 0.8), Vector3D(0, 0, 0), 100);
     
     Shape *s1 = new Sphere (0.25, sphereTransform1, p);
 
     // Define and place a sphere
     Matrix4x4 sphereTransform2;
     sphereTransform2 = sphereTransform2.translate(Vector3D(1.0, 0.0, 6));
-    Shape *s2 = new Sphere (1, sphereTransform2, p);
+    Shape *s2 = new Sphere (1, sphereTransform2, green_50);
 
     // Define and place a sphere
     Matrix4x4 sphereTransform3;
     sphereTransform3 = sphereTransform3.translate(Vector3D(0.3, -0.75, 3.5));
-    Shape *s3 = new Sphere (0.25, sphereTransform3, p);
+    Shape *s3 = new Sphere (0.25, sphereTransform3, red);
+
+    // Define and place plane
+    Shape* plane = new InfinitePlane(Vector3D(0.0, -1.0, 0.0), Vector3D(0.0, 1.0, 0.0), greyDiffuse);
 
     // Store the objects in the object list
     objectsList->push_back(s1);
     objectsList->push_back(s2);
     objectsList->push_back(s3);
+    objectsList->push_back(plane);
 
 
     /* ****** */
@@ -80,11 +88,25 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     // (...)
     //
     // DO NOT FORGET TO STORE THE LIGHT SOURCES IN THE "lightSourceList"
-    PointLightSource *light = new PointLightSource(Vector3D(1.0,0.0,0.0),Vector3D(5, 5, 5));
+    double offset = 3.0;
+    lightSourceList = new std::vector<PointLightSource>;
+    Vector3D lightPosition1 = Vector3D(0, offset - 1, 2 * offset);
+    Vector3D lightPosition2 = Vector3D(0, offset - 1, 0);
+    Vector3D lightPosition3 = Vector3D(0, offset - 1, offset);
+    Vector3D intensity = Vector3D(10, 10, 10); // Radiant intensity (watts/sr)
+    PointLightSource pointLS1(lightPosition1, intensity);
+    PointLightSource pointLS2(lightPosition2, intensity);
+    PointLightSource pointLS3(lightPosition3, intensity);
+    lightSourceList->push_back(pointLS1);
+    lightSourceList->push_back(pointLS2);
+    lightSourceList->push_back(pointLS3);
+    /*
+    PointLightSource *light = new PointLightSource(Vector3D(1.0,1.0,0.0),Vector3D(5, 5, 5));
+    PointLightSource* light2 = new PointLightSource(Vector3D(-2.0, 3.0, 0.0), Vector3D(10, 10, 10));
     lightSourceList = new std::vector<PointLightSource>;
     lightSourceList->push_back(*light);
-
-    //
+    lightSourceList->push_back(*light2);
+    */
 }
 
 void raytrace(Camera* &cam, Shader* &shader, Film* &film,

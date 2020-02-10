@@ -105,6 +105,9 @@
     <ClCompile Include="..\..\src\materials\phong.cpp">
       <Filter>src\materials</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\shapes\infiniteplane.cpp">
+      <Filter>src\shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\cameras\camera.h">
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\materials\phong.h">
       <Filter>src\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\shapes\infiniteplane.h">
+      <Filter>src\shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,1 +1,2 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v142 (Platform Toolset = 'v142') cannot be found. To build using the v142 build tools, please install v142 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  main.cpp
+  RTIS_V2.vcxproj -> D:\Universitat\Quart\IS\IS-A2\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe
