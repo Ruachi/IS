@@ -9,12 +9,9 @@ Phong::Phong(Vector3D ka_, Vector3D kd_, Vector3D ks_, float s_)
     s = s_;
 }
 
-bool Phong::hasSpecular(const Vector3D& n, const Vector3D& wo) const
+bool Phong::hasSpecular() const
 {
     // This material does not have specular component
-    Vector3D wr = Utils::computeReflectionDirection(-wo, n);
-    if (dot(wo, n) == dot(wr, n)) 
-        return true;
     return false;
 }
 

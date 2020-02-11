@@ -16,22 +16,22 @@ Vector3D DirectShader::computeColor(const Ray& r,
     Intersection its;
     if (Utils::getClosestIntersection(r, objList, its))
     {        
-
-        for (size_t i = 0; i < nL; i++)
+        if (its.shape->getMaterial().hasSpecular())
         {
-            Vector3D wi = lsList.at(i).getPosition() - its.itsPoint; //point to light direction
-
-            Vector3D wo = -r.d;    //point to cam direction
-            Ray shadowRay = Ray(its.itsPoint, wi);
-
-            if (its.shape->getMaterial().hasSpecular(its.normal, wo))
+            Vector3D wr = Utils::computeReflectionDirection(r.d, its.normal);
+            Ray reflectionRay = Ray(its.itsPoint, wr, r.depth + 1);
+            finalColor = computeColor(reflectionRay, objList, lsList);
+        }
+        else 
+        {
+            for (size_t i = 0; i < nL; i++)
             {
-                Vector3D wr = Utils::computeReflectionDirection(shadowRay.d, its.normal);
-                Ray reflectionRay = Ray(its.itsPoint, wr, shadowRay.depth + 1);
-                finalColor += computeColor(reflectionRay, objList, lsList);
-            }
-            else
-            {
+                Vector3D wi = lsList.at(i).getPosition() - its.itsPoint; //point to light direction
+
+                Vector3D wo = -r.d;    //point to cam direction
+                Ray shadowRay = Ray(its.itsPoint, wi);
+
+
                 float d = wi.length();
                 wi = wi.normalized();
 
