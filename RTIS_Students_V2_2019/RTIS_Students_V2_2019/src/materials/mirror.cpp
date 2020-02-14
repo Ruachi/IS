@@ -1,12 +1,11 @@
 #include "mirror.h"
 #include <iostream>
 
-Mirror::Mirror(Vector3D ka_, Vector3D kd_, Vector3D ks_, float s_)
+Mirror::Mirror(Vector3D kd_, Vector3D ks_, float s_)
 {
-    ka = ka_;
     kd = kd_;   //diffuse
     ks = ks_;   //specular
-    s = s_;
+    s = s_;     //shininess
 }
 
 bool Mirror::hasSpecular() const
@@ -43,4 +42,14 @@ double Mirror::getIndexOfRefraction() const
     std::cout << "Warning! Calling \"Material::getIndexOfRefraction()\" for a non-transmissive material"
               << std::endl;
     return -1;
+}
+
+Vector3D Mirror::getDiffuseCoefficient() const
+{
+    std::cout << "Warning !"
+        << "Calling \"Material::getDiffuseCoefficient()\""
+        << "for a non-diffuse or non-glossy material"
+        << std::endl;
+
+    return Vector3D(-1);
 }

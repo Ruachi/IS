@@ -12,3 +12,9 @@ double Material::getIndexOfRefraction() const
 
     return -1;
 }
+
+Vector3D Material::getDiffuseCoefficient() const
+{
+    std::cout << "Calling a material with no diffuse coefficietn " << std::endl;
+    return Vector3D(-1);
+}

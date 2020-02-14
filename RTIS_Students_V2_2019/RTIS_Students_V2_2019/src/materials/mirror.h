@@ -8,9 +8,8 @@
 class Mirror : public Material
 {
 public:
-    Mirror(Vector3D ka_, Vector3D kd_, Vector3D ks_, float s_);
+    Mirror(Vector3D kd_, Vector3D ks_, float s_);
 
-    Vector3D ka;
     Vector3D kd;
     Vector3D ks;
     float s;
@@ -21,6 +20,7 @@ public:
     virtual bool hasTransmission() const;
     virtual bool hasDiffuseOrGlossy() const;
     virtual double getIndexOfRefraction() const;
+    virtual Vector3D getDiffuseCoefficient() const;
 };
 
 

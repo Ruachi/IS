@@ -1,9 +1,8 @@
 #include "phong.h"
 #include <iostream>
 
-Phong::Phong(Vector3D ka_, Vector3D kd_, Vector3D ks_, float s_)
+Phong::Phong(Vector3D kd_, Vector3D ks_, float s_)
 {
-    ka = ka_;
     kd = kd_;   //diffuse
     ks = ks_;   //specular
     s = s_;
@@ -43,4 +42,14 @@ double Phong::getIndexOfRefraction() const
     std::cout << "Warning! Calling \"Material::getIndexOfRefraction()\" for a non-transmissive material"
               << std::endl;
     return -1;
+}
+
+Vector3D Phong::getDiffuseCoefficient() const
+{
+    /*std::cout << "Warning !"
+        << "Calling \"Material::getDiffuseCoefficient()\""
+        << "for a non-diffuse or non-glossy material"
+        << std::endl;
+        */
+    return kd;
 }

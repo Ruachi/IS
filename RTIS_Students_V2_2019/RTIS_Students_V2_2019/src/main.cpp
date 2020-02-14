@@ -17,9 +17,11 @@
 #include "shaders/intersectionshader.h"
 #include "shaders/depthshader.h"
 #include "shaders/directshader.h"
+#include "shaders/globalshader.h"
 
 #include "materials/phong.h"
 #include "materials/mirror.h"
+#include "materials/transmissive.h"
 
 void buildSceneSphere(Camera* &cam, Film* &film,
                       std::vector<Shape*>* &objectsList,
@@ -54,10 +56,10 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     Matrix4x4 sphereTransform1;
     sphereTransform1 = sphereTransform1.translate(Vector3D(-1.0, -0.5, 2*std::sqrt(2.0)));
 
-    Phong *p = new Phong(Vector3D(1, 0.0, 0.1), Vector3D(0.3, 0.5, 0.0), Vector3D(0.5, 0.5, 0.5), 50);
-    Material* green_50 = new Phong(Vector3D(1.0, 1.0, 1.0), Vector3D(0.2, 0.7, 0.3), Vector3D(0.2, 0.6, 0.2), 50);
-    Material* red = new Phong(Vector3D(1.0, 1.0, 1.0), Vector3D(0.7, 0.2, 0.3), Vector3D(0.4, 0.2, 0.2), 30);
-    Material* greyDiffuse = new Phong(Vector3D(1.0, 1.0, 1.0), Vector3D(0.8, 0.8, 0.8), Vector3D(0, 0, 0), 100);
+    Phong *p = new Phong(Vector3D(0.3, 0.5, 0.0), Vector3D(0.5, 0.5, 0.5), 50);
+    Material* green_50 = new Phong( Vector3D(0.2, 0.7, 0.3), Vector3D(0.2, 0.6, 0.2), 50);
+    Material* red = new Phong(Vector3D(0.7, 0.2, 0.3), Vector3D(0.4, 0.2, 0.2), 30);
+    Material* greyDiffuse = new Phong(Vector3D(0.8, 0.8, 0.8), Vector3D(0, 0, 0), 100);
     
     Shape *s1 = new Sphere (0.25, sphereTransform1, p);
 
@@ -101,13 +103,7 @@ void buildSceneSphere(Camera* &cam, Film* &film,
     lightSourceList->push_back(pointLS1);
     lightSourceList->push_back(pointLS2);
     lightSourceList->push_back(pointLS3);
-    /*
-    PointLightSource *light = new PointLightSource(Vector3D(1.0,1.0,0.0),Vector3D(5, 5, 5));
-    PointLightSource* light2 = new PointLightSource(Vector3D(-2.0, 3.0, 0.0), Vector3D(10, 10, 10));
-    lightSourceList = new std::vector<PointLightSource>;
-    lightSourceList->push_back(*light);
-    lightSourceList->push_back(*light2);
-    */
+
 }
 
 void raytrace(Camera* &cam, Shader* &shader, Film* &film,
@@ -159,17 +155,18 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     /* ********* */
     /* Materials */
     /* ********* */
-    Material* redDiffuse = new Phong(Vector3D(1, 1, 1), Vector3D(0.7, 0.2, 0.3), Vector3D(0, 0, 0), 100);
-    Material* greenDiffuse = new Phong(Vector3D(1, 1, 1), Vector3D(0.2, 0.7, 0.3), Vector3D(0, 0, 0), 100);
-    Material* greyDiffuse = new Phong(Vector3D(1, 1, 1), Vector3D(0.8, 0.8, 0.8), Vector3D(0, 0, 0), 100);
-    Material* blueDiffuse = new Phong(Vector3D(1, 1, 1), Vector3D(0.3, 0.2, 0.7), Vector3D(0, 0, 0), 100);
+    Material* redDiffuse = new Phong(Vector3D(0.7, 0.2, 0.3), Vector3D(0, 0, 0), 100);
+    Material* greenDiffuse = new Phong(Vector3D(0.2, 0.7, 0.3), Vector3D(0, 0, 0), 100);
+    Material* greyDiffuse = new Phong(Vector3D(0.8, 0.8, 0.8), Vector3D(0, 0, 0), 100);
+    Material* blueDiffuse = new Phong(Vector3D(0.3, 0.2, 0.7), Vector3D(0, 0, 0), 100);
+    Material* yellowDiffuse = new Phong(Vector3D(0.2, 0.8, 0.8), Vector3D(0, 0, 0), 100);
     
     //Material* transmissive = new Transmissive(1.1, Vector3D(1));
     //Material* mirror = new Mirror(Vector3D(1, 0.9, 0.85));
-    Material * transmissive = new Phong(Vector3D(1, 1, 1), Vector3D(1, 1, 0.2), Vector3D(1, 1, 0.2), 20);
-    Material * mirror = new Mirror(Vector3D(1, 1, 1), Vector3D(0.0, 0.9, 0.9), Vector3D(0.1, 0.9, 0.9), 50);
-
-    Material* red_100 = new Phong(Vector3D(1, 1, 1), Vector3D(0.7, 0.2, 0.3), Vector3D(0.7, 0.7, 0.2), 100);
+    //Material * refraction = new Transmissive(Vector3D(1, 1, 1), Vector3D(1, 1, 0.2), Vector3D(1, 1, 0.2), 20, 1.333);
+    Material * mirror = new Mirror(Vector3D(0.0, 0.9, 0.9), Vector3D(0.1, 0.9, 0.9), 50);
+    Material* red_100 = new Phong(Vector3D(0.7, 0.2, 0.3), Vector3D(0.7, 0.7, 0.2), 100);
+    Material* blue = new Phong(Vector3D(0.2, 0.2, 0.8), Vector3D(0.7, 0.7, 0.2), 60);
 
     /* ******* */
     /* Objects */
@@ -183,12 +180,14 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     Shape* topPlan = new InfinitePlane(Vector3D(0, offset, 0), Vector3D(0, -1, 0), greyDiffuse);
     Shape* bottomPlan = new InfinitePlane(Vector3D(0, -offset, 0), Vector3D(0, 1, 0), greyDiffuse);
     Shape* backPlan = new InfinitePlane(Vector3D(0, 0, 3 * offset), Vector3D(0, 0, -1), blueDiffuse);
+    Shape* frontPlan = new InfinitePlane(Vector3D(0, 0, -offset), Vector3D(0, 0, 1), yellowDiffuse);
+    
     objectsList->push_back(leftPlan);
     objectsList->push_back(rightPlan);
     objectsList->push_back(topPlan);
     objectsList->push_back(bottomPlan);
     objectsList->push_back(backPlan);
-
+    
     // Place the Spheres inside the Cornell Box
     Matrix4x4 sphereTransform1;
     double radius = 1;
@@ -196,7 +195,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     Shape* s1 = new Sphere(1.5, sphereTransform1, mirror);
     Matrix4x4 sphereTransform2;
     sphereTransform2 = Matrix4x4::translate(Vector3D(1.0, 0.0, 2));
-    Shape* s2 = new Sphere(1, sphereTransform2, transmissive);
+    Shape* s2 = new Sphere(1, sphereTransform2, blue);
     Matrix4x4 sphereTransform3;
     radius = 1;
     sphereTransform3 = Matrix4x4::translate(Vector3D(0.3, -offset + radius, 5));
@@ -238,6 +237,7 @@ int main()
     //Shader *shader = new IntersectionShader (intersectionColor, bgColor);
 	Shader *shader = new DepthShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
     Shader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
+    Shader* globalShader = new GlobalShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
 
     // Declare pointers to all the variables which describe the scene
     Camera *cam;
@@ -249,7 +249,7 @@ int main()
     buildSceneCornellBox(cam, film, objectsList, lightSourceList);
 
     // Launch some rays!
-    raytrace(cam, directShader, film, objectsList, lightSourceList);
+    raytrace(cam, globalShader, film, objectsList, lightSourceList);
 
     // Save the final result to file
     std::cout << "\n\nSaving the result to file output.bmp\n" << std::endl;
