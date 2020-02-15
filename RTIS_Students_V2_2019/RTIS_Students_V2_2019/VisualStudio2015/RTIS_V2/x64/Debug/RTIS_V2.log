@@ -1,6 +1,6 @@
-﻿  globalshader.cpp
-D:\Universitat\Quart\IS\IS-A2\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(27,35): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
-D:\Universitat\Quart\IS\IS-A2\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(64,35): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
-D:\Universitat\Quart\IS\IS-A2\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(73,25): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\Universitat\Quart\IS\IS-A2\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(29,19): warning C4101: 'eta': variable local sin referencia
-  RTIS_V2.vcxproj -> D:\Universitat\Quart\IS\IS-A2\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe
+﻿  directshader.cpp
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(26,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(86,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(95,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(28,19): warning C4101: 'eta': unreferenced local variable
+  RTIS_V2.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe

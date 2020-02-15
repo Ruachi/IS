@@ -101,14 +101,20 @@ Vector3D DirectShader::computeColor(const Ray& r,
                 {
                     //Ray shadowRay = Ray(its.itsPoint, wi);
                     shadowRay.maxT = d;
-
+                    Vector3D ambient = Vector3D(0.05, 0.05, 0.05);
                     if (!Utils::hasIntersection(shadowRay, objList))
                     {
                         Vector3D aux = Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint), 
                             its.shape->getMaterial().getReflectance(its.normal, wo, wi));
-                        //aux = aux + Utils::multiplyPerCanal(its.shape->getMaterial().getDiffuseCoefficient(), 
-                        //    Vector3D(0.1, 0.1, 0.1));
+                        aux = aux + Utils::multiplyPerCanal(its.shape->getMaterial().getDiffuseCoefficient(),
+                            ambient);
                         finalColor += (aux);
+                    }
+                    else 
+                    {
+                        
+                        finalColor += Utils::multiplyPerCanal(its.shape->getMaterial().getDiffuseCoefficient(),
+                            ambient);
                     }
                 }
             }
