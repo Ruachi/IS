@@ -88,18 +88,19 @@ Vector3D GlobalShader::computeColor(const Ray& r,
                     }
                 }
                 //calculate indirect
-                int n = 5;
+                int n = 64;
                 Vector3D at = Vector3D(0.1, 0.1, 0.1);
 
                 if (r.depth == 0)
                 {
-                    double aux = 1 / (2 * n * 3.14159);
+                    double aux = 1 / (2 * (n * 3.14159));
                     HemisphericalSampler sample = HemisphericalSampler();
                     for (int i = 0; i < n; i++)
                     {
                         Vector3D dir = sample.getSample(its.normal);
                         Ray secondaryRay = Ray(its.itsPoint, dir, r.depth + 1);
-                        indirectLight += computeColor(secondaryRay, objList, lsList);
+                        indirectLight += Utils::multiplyPerCanal( computeColor(secondaryRay, objList, lsList), 
+                            its.shape->getMaterial().getReflectance(its.normal, wo, dir));
                     }
                     indirectLight = Utils::multiplyPerCanal(aux, indirectLight);
                 }
