@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "shader.h"
+#include "../core/utils.h"
 
 class GlobalShader : public Shader
 {
@@ -21,6 +22,7 @@ public:
 private:
     double maxDist; // Used to store the value of the maximum distance which can be visualized
     Vector3D color; // Used to store the visualization color
+	Vector3D ambient;
 };
 
 #endif // GLOBALSHADER_H
