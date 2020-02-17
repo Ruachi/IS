@@ -23,6 +23,7 @@ private:
     double maxDist; // Used to store the value of the maximum distance which can be visualized
     Vector3D color; // Used to store the visualization color
 	Vector3D ambient;
+	int maxDepth;
 };
 
 #endif // GLOBALSHADER_H

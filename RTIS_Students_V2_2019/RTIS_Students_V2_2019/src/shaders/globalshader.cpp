@@ -8,6 +8,7 @@ GlobalShader::GlobalShader(Vector3D color_, double maxDist_, Vector3D bgColor_) 
     Shader(bgColor_), maxDist(maxDist_), color(color_)
 {
 	ambient = (0.1, 0.1, 0.1);
+	maxDepth = 2;
 }
 
 Vector3D GlobalShader::computeColor(const Ray& r,
@@ -159,9 +160,9 @@ Vector3D GlobalShader::computeColor(const Ray& r,
 			Vector3D wo = -r.d;
 			//INDIRECT ILLUMINATION
 			//for the first case, we only take into account the ambient light
-			if (ambiental) 
+			if (r.depth == maxDepth)
 			{
-				indirectLight = Utils::multiplyPerCanal( its.shape->getMaterial().getDiffuseCoefficient(),ambient);
+				indirectLight += Utils::multiplyPerCanal( its.shape->getMaterial().getDiffuseCoefficient(),ambient);
 			}
 			else if (r.depth == 0 && twoBounces)
 			{
@@ -170,16 +171,25 @@ Vector3D GlobalShader::computeColor(const Ray& r,
 				HemisphericalSampler sample = HemisphericalSampler();
 				for (int i = 0; i < n; i++)
 				{
-					Vector3D dir = sample.getSample(its.normal);
-					Ray secondaryRay = Ray(its.itsPoint, dir, r.depth + 1);
+					Vector3D dir = sample.getSample(its.normal.normalized());
+					Ray secondaryRay = Ray(its.itsPoint, dir.normalized(), r.depth + 1);
 					indirectLight += Utils::multiplyPerCanal(computeColor(secondaryRay, objList, lsList),
-						its.shape->getMaterial().getReflectance(its.normal, wo, dir));
+						its.shape->getMaterial().getReflectance(its.normal, wo.normalized(), dir.normalized()));
 				}
 				indirectLight = Utils::multiplyPerCanal(aux, indirectLight);
 			}
-			else
+			else if(r.depth > 0)
 			{
-				indirectLight = Utils::multiplyPerCanal(ambient, its.shape->getMaterial().getDiffuseCoefficient());
+				Vector3D dir = its.normal.normalized();
+				Ray normalRay = Ray(its.itsPoint, dir, r.depth + 1);
+				
+				Vector3D wr = Utils::computeReflectionDirection(wo, its.normal.normalized());
+				Ray secondaryRay = Ray(its.itsPoint, wr.normalized(), r.depth + 1);
+				normalRay.maxT = wr.length();
+				
+				double aux = 1 / (4 * M_PI);
+				indirectLight += (computeColor(normalRay, objList, lsList) + computeColor(secondaryRay, objList, lsList))*aux;
+
 			}
 			finalColor += indirectLight;
         }
