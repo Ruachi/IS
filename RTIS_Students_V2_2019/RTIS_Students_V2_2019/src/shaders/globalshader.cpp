@@ -8,7 +8,7 @@ GlobalShader::GlobalShader(Vector3D color_, double maxDist_, Vector3D bgColor_) 
     Shader(bgColor_), maxDist(maxDist_), color(color_)
 {
 	ambient = (0.1, 0.1, 0.1);
-	maxDepth = 2;
+	maxDepth = 5;
 }
 
 Vector3D GlobalShader::computeColor(const Ray& r,
@@ -20,7 +20,7 @@ Vector3D GlobalShader::computeColor(const Ray& r,
 	bool ambiental = false;
 	bool twoBounces = true;
 	//Number of rays when bouncing
-	int n = 100;
+	int n = 1000;
 	
 
     if (Utils::getClosestIntersection(r, objList, its))

@@ -1,6 +1,12 @@
-﻿  directshader.cpp
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(26,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(86,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(95,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(28,19): warning C4101: 'eta': unreferenced local variable
+﻿  main.cpp
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(166,117): warning C4305: 'argument': truncation from 'double' to 'float'
+  directshader.cpp
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(27,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(33,28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(87,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(96,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  globalshader.cpp
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(128,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(136,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   RTIS_V2.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe
