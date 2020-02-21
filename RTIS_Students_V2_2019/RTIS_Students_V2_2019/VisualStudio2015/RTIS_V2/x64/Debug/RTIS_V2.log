@@ -1,6 +1,4 @@
-﻿  directshader.cpp
-D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(39,69): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(45,69): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(69,26): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
-D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(78,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+﻿  globalshader.cpp
+D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(64,27): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(72,14): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
   RTIS_V2.vcxproj -> D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe
