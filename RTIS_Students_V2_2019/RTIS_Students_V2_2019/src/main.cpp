@@ -163,7 +163,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     
     //Material* transmissive = new Transmissive(1.1, Vector3D(1));
     //Material* mirror = new Mirror(Vector3D(1, 0.9, 0.85));
-    Material * refraction = new Transmissive(Vector3D(1, 1, 1), Vector3D(1, 1, 0.2), Vector3D(1, 1, 0.2), 20, 1.333);
+    Material * refraction = new Transmissive(Vector3D(1, 1, 1), 1.5);
     Material * mirror = new Mirror(Vector3D(0.0, 0.9, 0.9), Vector3D(0.1, 0.9, 0.9), 50);
     Material* red_100 = new Phong(Vector3D(0.7, 0.2, 0.3), Vector3D(0.7, 0.7, 0.2), 100);
     Material* blue = new Phong(Vector3D(0.2, 0.2, 0.8), Vector3D(0.7, 0.7, 0.2), 60);
@@ -195,7 +195,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     Shape* s1 = new Sphere(1.5, sphereTransform1, mirror);
     Matrix4x4 sphereTransform2;
     sphereTransform2 = Matrix4x4::translate(Vector3D(1.0, 0.0, 2));
-    Shape* s2 = new Sphere(1, sphereTransform2, blue);
+    Shape* s2 = new Sphere(1, sphereTransform2, refraction);
     Matrix4x4 sphereTransform3;
     radius = 1;
     sphereTransform3 = Matrix4x4::translate(Vector3D(0.3, -offset + radius, 5));
@@ -211,7 +211,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     Vector3D lightPosition1 = Vector3D(0, offset - 1, 2 * offset);
     Vector3D lightPosition2 = Vector3D(0, offset - 1, 0);
     Vector3D lightPosition3 = Vector3D(0, offset - 1, offset);
-    Vector3D intensity = Vector3D(100, 100, 100); // Radiant intensity (watts/sr)
+    Vector3D intensity = Vector3D(10, 10, 10); // Radiant intensity (watts/sr)
     PointLightSource pointLS1(lightPosition1, intensity);
     PointLightSource pointLS2(lightPosition2, intensity);
     PointLightSource pointLS3(lightPosition3, intensity);
@@ -249,7 +249,7 @@ int main()
     buildSceneCornellBox(cam, film, objectsList, lightSourceList);
 
     // Launch some rays!
-    raytrace(cam, globalShader, film, objectsList, lightSourceList);
+    raytrace(cam, directShader, film, objectsList, lightSourceList);
 
     // Save the final result to file
     std::cout << "\n\nSaving the result to file output.bmp\n" << std::endl;

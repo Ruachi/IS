@@ -8,12 +8,9 @@
 class Transmissive : public Material
 {
 public:
-    Transmissive(Vector3D ka_, Vector3D kd_, Vector3D ks_, float s_, float n_);
+    Transmissive(Vector3D v,  float n_);
 
-    Vector3D ka;
-    Vector3D kd;
-    Vector3D ks;
-    float s;
+    Vector3D v;
     float n;
 
     virtual Vector3D getReflectance(const Vector3D& n, const Vector3D& wo,
@@ -22,7 +19,6 @@ public:
     virtual bool hasTransmission() const;
     virtual bool hasDiffuseOrGlossy() const;
     virtual double getIndexOfRefraction() const;
-    virtual Vector3D getDiffuseCoefficient() const;
 };
 
 
