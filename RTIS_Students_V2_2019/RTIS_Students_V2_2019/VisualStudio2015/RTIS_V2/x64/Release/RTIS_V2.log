@@ -1,9 +1,12 @@
-﻿  globalshader.cpp
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(128,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\globalshader.cpp(136,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating code
+﻿  directshader.cpp
+D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(30,65): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(39,69): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(45,69): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(69,26): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(78,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+  Generando código
   1 of 367 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  RTIS_V2.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Release\RTIS_V2.exe
+    2 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  RTIS_V2.vcxproj -> D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Release\RTIS_V2.exe
