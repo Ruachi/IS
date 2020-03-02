@@ -70,59 +70,6 @@ Vector3D GlobalShader::computeColor(const Ray& r,
         }
         else//if Phong
         {
-			/*
-            Vector3D indirectLight;
-            int nL = lsList.size();
-            for (size_t i = 0; i < nL; i++)
-            {
-                Vector3D wi = lsList.at(i).getPosition() - its.itsPoint; //point to light direction
-
-                Vector3D wo = -r.d;    //point to cam direction
-                wi = wi.normalized();
-                Ray shadowRay = Ray(its.itsPoint, wi);
-
-                float d = wi.length();
-
-                // CHECK IF LIGHT BELOW SURFACE
-                double angle = dot(wi, its.normal);
-
-                if (angle > 0)
-                {
-                    //Ray shadowRay = Ray(its.itsPoint, wi);
-                    shadowRay.maxT = d;
-
-                    if (!Utils::hasIntersection(shadowRay, objList))
-                    {
-                        Vector3D aux = Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint), 
-                            its.shape->getMaterial().getReflectance(its.normal, wo, wi));
-                        finalColor += (aux);
-                    }
-                }
-                //calculate indirect
-                int n = 64;
-                Vector3D at = Vector3D(0.1, 0.1, 0.1);
-
-                if (r.depth == 0)
-                {
-                    double aux = 1 / (2 * (n * 3.14159));
-                    HemisphericalSampler sample = HemisphericalSampler();
-                    for (int i = 0; i < n; i++)
-                    {
-                        Vector3D dir = sample.getSample(its.normal);
-                        Ray secondaryRay = Ray(its.itsPoint, dir, r.depth + 1);
-                        indirectLight += Utils::multiplyPerCanal( computeColor(secondaryRay, objList, lsList), 
-                            its.shape->getMaterial().getReflectance(its.normal, wo, dir));
-                    }
-                    indirectLight = Utils::multiplyPerCanal(aux, indirectLight);
-                }
-                else
-                {
-                    indirectLight += Utils::multiplyPerCanal(at, its.shape->getMaterial().getDiffuseCoefficient());
-                }
-
-            }
-            finalColor = indirectLight + finalColor;*/
-
 			//DIRECT ILLUMINATION
 			if (r.depth > 0) {
 				int nL = lsList.size();

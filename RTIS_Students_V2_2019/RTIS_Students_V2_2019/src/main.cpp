@@ -23,6 +23,8 @@
 #include "materials/mirror.h"
 #include "materials/transmissive.h"
 
+#include "lightsources/plafon.h"
+
 void buildSceneSphere(Camera* &cam, Film* &film,
                       std::vector<Shape*>* &objectsList,
                       std::vector<PointLightSource>* &lightSourceList)
@@ -191,7 +193,8 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     // Place the Spheres inside the Cornell Box
     Matrix4x4 sphereTransform1;
     double radius = 1;
-    sphereTransform1 = Matrix4x4::translate(Vector3D(-offset + radius, -offset + radius, 3.5));
+    //sphereTransform1 = Matrix4x4::translate(Vector3D(-offset + radius, -offset + radius, 3.5));
+	sphereTransform1 = Matrix4x4::translate(Vector3D(0, 0, 2));
     Shape* s1 = new Sphere(1.5, sphereTransform1, mirror);
     Matrix4x4 sphereTransform2;
     sphereTransform2 = Matrix4x4::translate(Vector3D(1.0, 0.0, 2));
@@ -200,13 +203,14 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     radius = 1;
     sphereTransform3 = Matrix4x4::translate(Vector3D(0.3, -offset + radius, 5));
     Shape* s3 = new Sphere(radius, sphereTransform3, red_100);
-    objectsList->push_back(s1);
+    //objectsList->push_back(s1);
     objectsList->push_back(s2);
     objectsList->push_back(s3);
 
     /* ****** */
     /* Lights */
     /* ****** */
+	/*
     lightSourceList = new std::vector<PointLightSource>;
     Vector3D lightPosition1 = Vector3D(0, offset - 1, 2 * offset);
     Vector3D lightPosition2 = Vector3D(0, offset - 1, 0);
@@ -217,7 +221,20 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     PointLightSource pointLS3(lightPosition3, intensity);
     lightSourceList->push_back(pointLS1);
     lightSourceList->push_back(pointLS2);
-    lightSourceList->push_back(pointLS3);
+    lightSourceList->push_back(pointLS3);*/
+
+	Plafon* plafonaco = new Plafon(Vector3D(0, 0, 3), Vector3D(2,2,2), 500, 5, 5);
+	plafonaco->distributeLights();
+	lightSourceList = new std::vector<PointLightSource>;
+	Vector3D lightPosition2 = Vector3D(0, offset - 1, 0);
+	PointLightSource pointLS2(lightPosition2, Vector3D(10, 10, 10));
+	lightSourceList->push_back(pointLS2);
+	for (int i = 0; i < 5; i++) 
+	{
+		lightSourceList->push_back(plafonaco->getList()->at(i));
+	}
+
+
 }
 
 int main()

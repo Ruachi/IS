@@ -16,4 +16,9 @@ Vector3D PointLightSource::getIntensity(const Vector3D &p) const
     Vector3D result = intensity / sqDistance;
     return result;
 }
+/*
+void PointLightSource::setPosistion(const Vector3D &p) const
+{
+	pos = p;
+}*/
 

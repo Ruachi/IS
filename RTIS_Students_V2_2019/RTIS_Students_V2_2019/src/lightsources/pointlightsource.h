@@ -16,6 +16,7 @@ public:
     // Getters
     Vector3D getPosition() const;
     Vector3D getIntensity(const Vector3D &dir) const;
+	void setPosistion(const Vector3D &p) const;
 
 
 private:

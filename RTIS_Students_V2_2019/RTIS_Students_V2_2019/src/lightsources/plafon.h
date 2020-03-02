@@ -21,6 +21,8 @@ public:
 	float getNumberLights() const;
 	float getNumberLightsIntersectP(const Vector3D &p) const;
 	float computeAngle() const;
+	void distributeLights() const;
+	std::vector<PointLightSource>* getList() const;
 
 
 private:
@@ -30,7 +32,8 @@ private:
 	float width; //width of the square
 	float height; //heigth of the square
 	float angle; //angle between plane on (0,0,0) and our pos. This angle will be used to simplify computations.  wi = lsList.at(i).getPosition() - its.itsPoint; if dot(wi, lighsource.normal)>=0, we don't compute it.
-	std::vector<PointLightSource> lightSourceList;
+	std::vector<PointLightSource>* lightSourceList;
+	float normal;
 
 };
 
