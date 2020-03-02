@@ -120,6 +120,9 @@
     <ClCompile Include="..\..\src\core\hemisphericalsampler.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\lightsources\plafon.cpp">
+      <Filter>src\lightsources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\cameras\camera.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\core\hemisphericalsampler.h">
       <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\lightsources\plafon.h">
+      <Filter>src\lightsources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

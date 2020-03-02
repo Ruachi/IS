@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\core\tester.cpp" />
     <ClCompile Include="..\..\src\core\utils.cpp" />
     <ClCompile Include="..\..\src\core\vector3d.cpp" />
+    <ClCompile Include="..\..\src\lightsources\plafon.cpp" />
     <ClCompile Include="..\..\src\lightsources\pointlightsource.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\materials\material.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="..\..\src\core\tester.h" />
     <ClInclude Include="..\..\src\core\utils.h" />
     <ClInclude Include="..\..\src\core\vector3d.h" />
+    <ClInclude Include="..\..\src\lightsources\plafon.h" />
     <ClInclude Include="..\..\src\lightsources\pointlightsource.h" />
     <ClInclude Include="..\..\src\materials\material.h" />
     <ClInclude Include="..\..\src\materials\mirror.h" />

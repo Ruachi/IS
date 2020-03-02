@@ -24,6 +24,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
         }
         else if (its.shape->getMaterial().hasTransmission())
         {
+            Vector3D normalAuxiliar = its.normal.normalized();
             double eta = its.shape->getMaterial().getIndexOfRefraction();
             double cosThetaT_out;
             double thetaI = dot(its.normal.normalized(), wo);
@@ -31,22 +32,21 @@ Vector3D DirectShader::computeColor(const Ray& r,
             if (thetaI < 0)
             {
                 thetaI = dot(-its.normal.normalized(), wo);
+                normalAuxiliar = -normalAuxiliar;
                 eta = 1 / eta;
             }
 
             if (!Utils::isTotalInternalReflection(eta, thetaI, cosThetaT_out))
             {
-                //finalColor = Vector3D(1, 0, 0);
-                Vector3D wt = Utils::computeTransmissionDirection(r, its.normal.normalized(), eta, thetaI, cosThetaT_out);
-                Ray refractionRay = Ray(its.itsPoint, wt, r.depth + 1);
-                finalColor = computeColor(refractionRay, objList, lsList);
+                Vector3D wt = Utils::computeTransmissionDirection(r, normalAuxiliar, eta, thetaI, cosThetaT_out);
+                Ray refractionRay = Ray(its.itsPoint, wt, r.depth);
+                return computeColor(refractionRay, objList, lsList);
             }
             else
             {
-                Vector3D wr = Utils::computeReflectionDirection(r.d, its.normal.normalized());
-                Ray reflectionRay = Ray(its.itsPoint, wr.normalized(), r.depth + 1);
-                finalColor = computeColor(reflectionRay, objList, lsList);
-				//finalColor = Vector3D(0, 0, 1);
+                Vector3D wr = Utils::computeReflectionDirection(r.d, normalAuxiliar);
+                Ray reflectionRay = Ray(its.itsPoint, wr.normalized(), r.depth);
+                return computeColor(reflectionRay, objList, lsList);
             }
         }
         else//if Phong

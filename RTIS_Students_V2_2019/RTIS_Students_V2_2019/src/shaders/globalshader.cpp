@@ -21,8 +21,8 @@ Vector3D GlobalShader::computeColor(const Ray& r,
 	bool twoBounces = true;
 	//Number of rays when bouncing
 	int n = 1000;
+	Vector3D wo = -r.d;
 	
-
     if (Utils::getClosestIntersection(r, objList, its))
     {
         if (its.shape->getMaterial().hasSpecular())
@@ -33,40 +33,30 @@ Vector3D GlobalShader::computeColor(const Ray& r,
         }
         else if (its.shape->getMaterial().hasTransmission())
         {
-			/*
-            int nL = lsList.size();
-            float eta1 = 1;
-            float eta;
+			Vector3D normalAuxiliar = its.normal.normalized();
+			double eta = its.shape->getMaterial().getIndexOfRefraction();
+			double cosThetaT_out;
+			double thetaI = dot(its.normal.normalized(), wo);
 
-            for (size_t i = 0; i < nL; i++)
-            {
-                Vector3D wi = lsList.at(i).getPosition() - its.itsPoint; //point to light direction
-                wi = wi.normalized();
-                double alpha = dot(its.normal, -wi);
+			if (thetaI < 0)
+			{
+				thetaI = dot(-its.normal.normalized(), wo);
+				normalAuxiliar = -normalAuxiliar;
+				eta = 1 / eta;
+			}
 
-                double nt = 1.5;
-                double eta = its.shape->getMaterial().getIndexOfRefraction() / 1;
-                double cosThetaOut;
-
-                eta = nt;
-
-
-                if (!Utils::isTotalInternalReflection(eta, cos(alpha), cosThetaOut))
-                {
-                    Vector3D wt = Utils::computeTransmissionDirection(r, its.normal, eta, cos(alpha), cosThetaOut);
-                    Ray refractionRay = Ray(its.itsPoint, wt.normalized(), r.depth + 1);
-                    finalColor = computeColor(refractionRay, objList, lsList);
-                    //finalColor = Vector3D(0, 0, 1);
-                }
-                else
-                {
-                    Vector3D wr = Utils::computeReflectionDirection(r.d, its.normal);
-                    Ray reflectionRay = Ray(its.itsPoint, wr, r.depth + 1);
-                    finalColor = computeColor(reflectionRay, objList, lsList);
-                    //finalColor = Vector3D(0, 1, 0);
-                }
-
-            }*/
+			if (!Utils::isTotalInternalReflection(eta, thetaI, cosThetaT_out))
+			{
+				Vector3D wt = Utils::computeTransmissionDirection(r, normalAuxiliar, eta, thetaI, cosThetaT_out);
+				Ray refractionRay = Ray(its.itsPoint, wt, r.depth);
+				return computeColor(refractionRay, objList, lsList);
+			}
+			else
+			{
+				Vector3D wr = Utils::computeReflectionDirection(r.d, normalAuxiliar);
+				Ray reflectionRay = Ray(its.itsPoint, wr.normalized(), r.depth);
+				return computeColor(reflectionRay, objList, lsList);
+			}
         }
         else//if Phong
         {
