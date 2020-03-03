@@ -223,7 +223,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     lightSourceList->push_back(pointLS2);
     lightSourceList->push_back(pointLS3);*/
 
-	Plafon* plafonaco = new Plafon(Vector3D(0, 3, 3), Vector3D(2,2,2), 500, 3, 3);
+	Plafon* plafonaco = new Plafon(Vector3D(0, 3, 3), Vector3D(2,2,2), 10, 10, 3, 3);
 	plafonaco->distributeLights();
 	lightSourceList = new std::vector<PointLightSource>;
 	Vector3D lightPosition2 = Vector3D(0, offset - 1, 0);

@@ -13,7 +13,7 @@ class Plafon
 {
 public:
 	Plafon() = delete;
-	Plafon(Vector3D pos_, Vector3D intensity_, float numberLights_, float width_, float height__);
+	Plafon(Vector3D pos_, Vector3D intensity_, float numberLightsPerHeight_, float numberLightsPerWidth_, float width_, float height__);
 
 	// Getters
 	Vector3D getPosition() const;
@@ -28,7 +28,8 @@ public:
 private:
 	Vector3D pos; //center mass position on the scene
 	Vector3D intensity; // (unity: watts/sr)
-	float numberLights; //number of lights inside the square
+	float numberLightsPerWidth;
+	float numberLightsPerHeight;
 	float width; //width of the square
 	float height; //heigth of the square
 	float angle; //angle between plane on (0,0,0) and our pos. This angle will be used to simplify computations.  wi = lsList.at(i).getPosition() - its.itsPoint; if dot(wi, lighsource.normal)>=0, we don't compute it.

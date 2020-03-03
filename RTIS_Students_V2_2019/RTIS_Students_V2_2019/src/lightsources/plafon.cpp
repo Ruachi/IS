@@ -1,8 +1,8 @@
 #include "plafon.h"
 
 
-Plafon::Plafon(Vector3D pos_, Vector3D intensity_, float numberLights_, float width_, float height_) :
-	pos(pos_), intensity(intensity_), numberLights(numberLights_), width(width_), height(height_)
+Plafon::Plafon(Vector3D pos_, Vector3D intensity_, float numberLightsPerHeight_, float numberLightsPerWidth_, float width_, float height_) :
+	pos(pos_), intensity(intensity_), numberLightsPerHeight(numberLightsPerHeight_),  numberLightsPerWidth(numberLightsPerWidth_), width(width_), height(height_)
 { 
 	lightSourceList = new std::vector<PointLightSource>;
 }
@@ -22,7 +22,7 @@ Vector3D Plafon::getIntensity(const Vector3D &p) const
 
 float Plafon::getNumberLights() const
 {
-	return numberLights;
+	return numberLightsPerHeight + numberLightsPerWidth;
 }
 
 float Plafon::getNumberLightsIntersectP(const Vector3D &p) const
@@ -43,30 +43,33 @@ float Plafon::getNumberLightsIntersectP(const Vector3D &p) const
 
 void Plafon::distributeLights() const
 {
-	float xpoints = sqrt(width/height* numberLights +pow((width-height),2.0)/4*pow(height,2.0))-(width-height)/(height*height);
-	float ypoints = numberLights / xpoints;
-
-	float spacing = width / (xpoints-1);
 
 	float x = this->pos.x - this->width * 0.5;
 	float y = this->pos.y - this->height * 0.5;
 	
+	float space_x = this->width / this->numberLightsPerWidth;
+	float space_y = this->height / this->numberLightsPerHeight;
+
+	/*
+	float aux;
+	float random = ((float)rand()) / (float)RAND_MAX;
+	float diff = space_x - space_y;
+	float r = random * diff;
+	r = aux + r;
+	*/
+
 	Vector3D start = Vector3D(x, y, this->pos.z);
 
-	//xpoints = 5;
-	//ypoints = 5;
-
-	for (int i = 0; i < xpoints; i++)
+	for (int i = 0; i < this->numberLightsPerHeight; i++)
 	{
-		for (int j = 0; j < ypoints; j++) 
+		for (int j = 0; j < this->numberLightsPerWidth; j++) 
 		{
 			PointLightSource light = PointLightSource(start, intensity);
 			lightSourceList->push_back(light);
-			start.x = start.x + spacing;
+			start.x = start.x + space_x;
 		}
-		start.y = start.y + spacing;
+		start.y = start.y + space_y;
 	}
-
 }
 
 std::vector<PointLightSource>* Plafon::getList() const
