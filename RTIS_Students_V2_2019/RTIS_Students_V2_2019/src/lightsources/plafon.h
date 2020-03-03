@@ -36,6 +36,7 @@ private:
 	std::vector<PointLightSource>* lightSourceList;
 	float normal;
 
+	float generateRandomPosition( float size ) const;
 };
 
 #endif // PLAFON_H

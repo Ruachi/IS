@@ -184,11 +184,11 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     Shape* backPlan = new InfinitePlane(Vector3D(0, 0, 3 * offset), Vector3D(0, 0, -1), blueDiffuse);
     Shape* frontPlan = new InfinitePlane(Vector3D(0, 0, -offset), Vector3D(0, 0, 1), yellowDiffuse);
     
-    objectsList->push_back(leftPlan);
-    objectsList->push_back(rightPlan);
-    objectsList->push_back(topPlan);
+    //objectsList->push_back(leftPlan);
+    //objectsList->push_back(rightPlan);
+    //objectsList->push_back(topPlan);
     objectsList->push_back(bottomPlan);
-    objectsList->push_back(backPlan);
+    //objectsList->push_back(backPlan);
     
     // Place the Spheres inside the Cornell Box
     Matrix4x4 sphereTransform1;
@@ -223,17 +223,66 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     lightSourceList->push_back(pointLS2);
     lightSourceList->push_back(pointLS3);*/
 
-	Plafon* plafonaco = new Plafon(Vector3D(0, 3, 3), Vector3D(2,2,2), 10, 10, 3, 3);
+    int numberLightsPerWidth = 100;
+    int numberLightsPerHeight = 100;
+    int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
+
+	Plafon* plafonaco = new Plafon(Vector3D(0, 3, 3), Vector3D(3,3,3), numberLightsPerWidth, numberLightsPerHeight, 4, 4);
 	plafonaco->distributeLights();
 	lightSourceList = new std::vector<PointLightSource>;
-	Vector3D lightPosition2 = Vector3D(0, offset - 1, 0);
-	//PointLightSource pointLS2(lightPosition2, Vector3D(10, 10, 10));
-	//lightSourceList->push_back(pointLS2);
-    for (int i = 0; i < 5; i++)
+
+    for (int i = 0; i < totalNumberLights; i++)
     {
         lightSourceList->push_back(plafonaco->getList()->at(i));
     }
 }
+
+void buildSoftShadowScene(Camera*& cam, Film*& film,
+    std::vector<Shape*>*& objectsList, std::vector<PointLightSource>*& lightSourceList)
+{
+    /* **************************** */
+    /* Declare and place the camera */
+    /* **************************** */
+    Matrix4x4 cameraToWorld = Matrix4x4::translate(Vector3D(0, 0, -3));
+    double fovDegrees = 60;
+    double fovRadians = Utils::degreesToRadians(fovDegrees);
+    cam = new PerspectiveCamera(cameraToWorld, fovRadians, *film);
+
+    /* ********* */
+    /* Materials */
+    /* ********* */
+    Material* greyDiffuse = new Phong(Vector3D(0.8, 0.8, 0.8), Vector3D(0, 0, 0), 100);
+    Material* red_100 = new Phong(Vector3D(0.7, 0.2, 0.3), Vector3D(0.7, 0.7, 0.2), 100);
+
+    /* ***** */
+    /* Plane */
+    /* ***** */
+    objectsList = new std::vector<Shape*>;
+    float offset = 3;
+    Shape* bottomPlan = new InfinitePlane(Vector3D(0, -offset, 0), Vector3D(0, 1, 0), greyDiffuse);
+    objectsList->push_back(bottomPlan);
+
+    Matrix4x4 sphereTransform3;
+    float radius = 1;
+    sphereTransform3 = Matrix4x4::translate(Vector3D(0.3, -offset + radius, 5));
+    Shape* s3 = new Sphere(radius, sphereTransform3, red_100);
+    objectsList->push_back(s3);
+
+    /* ****** */
+    /* Lights */
+    /* ****** */
+    int numberLightsPerWidth = 100;
+    int numberLightsPerHeight = 100;
+    int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
+    lightSourceList = new std::vector<PointLightSource>;
+
+    Plafon* areaLight = new Plafon(Vector3D(0, 3, 3), Vector3D(3, 3, 3), numberLightsPerWidth, numberLightsPerHeight, 4, 4);
+    areaLight->distributeLights();
+    for (int i = 0; i < totalNumberLights; i++)
+    {
+        lightSourceList->push_back(areaLight->getList()->at(i));
+    }
+};
 
 int main()
 {
@@ -262,6 +311,7 @@ int main()
     // Build the scene
     //buildSceneSphere(cam, film, objectsList, lightSourceList);
     buildSceneCornellBox(cam, film, objectsList, lightSourceList);
+    //buildSoftShadowScene(cam, film, objectsList, lightSourceList);
 
     // Launch some rays!
     raytrace(cam, directShader, film, objectsList, lightSourceList);

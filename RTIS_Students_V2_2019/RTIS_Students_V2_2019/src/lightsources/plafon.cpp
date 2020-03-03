@@ -45,34 +45,38 @@ void Plafon::distributeLights() const
 {
 
 	float x = this->pos.x - this->width * 0.5;
-	float y = this->pos.y - this->height * 0.5;
+	float y = this->pos.z - this->height * 0.5;
 	
-	float space_x = this->width / this->numberLightsPerWidth;
-	float space_y = this->height / this->numberLightsPerHeight;
+	float xSquareSize = this->width / this->numberLightsPerWidth;
+	float ySquareSize = this->height / this->numberLightsPerHeight;
 
-	/*
-	float aux;
-	float random = ((float)rand()) / (float)RAND_MAX;
-	float diff = space_x - space_y;
-	float r = random * diff;
-	r = aux + r;
-	*/
-
-	Vector3D start = Vector3D(x, y, this->pos.z);
+	Vector3D start = Vector3D(x, this->pos.y, y);
 
 	for (int i = 0; i < this->numberLightsPerHeight; i++)
 	{
-		for (int j = 0; j < this->numberLightsPerWidth; j++) 
+		for (float j = 0; j < this->numberLightsPerWidth; j++) 
 		{
+			float xOffset = generateRandomPosition(xSquareSize);
+			float yOffset = generateRandomPosition(ySquareSize);
+
+			xOffset = start.x + xOffset;
+			yOffset = start.z + yOffset;
+
 			PointLightSource light = PointLightSource(start, intensity);
 			lightSourceList->push_back(light);
-			start.x = start.x + space_x;
+			start.x += xSquareSize * j;
 		}
-		start.y = start.y + space_y;
+		start.z = ySquareSize * i;
 	}
 }
 
 std::vector<PointLightSource>* Plafon::getList() const
 {
 	return lightSourceList;
+}
+
+float Plafon::generateRandomPosition(float size) const
+{
+	float random = ((float)rand()) / RAND_MAX;
+	return random * size;
 }
