@@ -64,9 +64,9 @@ void Plafon::distributeLights() const
 
 			PointLightSource light = PointLightSource(start, intensity);
 			lightSourceList->push_back(light);
-			start.x += xSquareSize * j;
+			start.x += xSquareSize;
 		}
-		start.z = ySquareSize * i;
+		start.z += ySquareSize;
 	}
 }
 

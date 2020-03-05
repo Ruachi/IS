@@ -184,11 +184,11 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     Shape* backPlan = new InfinitePlane(Vector3D(0, 0, 3 * offset), Vector3D(0, 0, -1), blueDiffuse);
     Shape* frontPlan = new InfinitePlane(Vector3D(0, 0, -offset), Vector3D(0, 0, 1), yellowDiffuse);
     
-    //objectsList->push_back(leftPlan);
-    //objectsList->push_back(rightPlan);
-    //objectsList->push_back(topPlan);
+    objectsList->push_back(leftPlan);
+    objectsList->push_back(rightPlan);
+    objectsList->push_back(topPlan);
     objectsList->push_back(bottomPlan);
-    //objectsList->push_back(backPlan);
+    objectsList->push_back(backPlan);
     
     // Place the Spheres inside the Cornell Box
     Matrix4x4 sphereTransform1;
@@ -227,7 +227,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     int numberLightsPerHeight = 100;
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
 
-	Plafon* plafonaco = new Plafon(Vector3D(0, 3, 3), Vector3D(3,3,3), numberLightsPerWidth, numberLightsPerHeight, 4, 4);
+	Plafon* plafonaco = new Plafon(Vector3D(0, 2.5, 3), Vector3D(1,1,1), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
 	plafonaco->distributeLights();
 	lightSourceList = new std::vector<PointLightSource>;
 
