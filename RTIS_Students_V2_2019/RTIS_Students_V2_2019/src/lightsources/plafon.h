@@ -17,10 +17,9 @@ public:
 
 	// Getters
 	Vector3D getPosition() const;
-	Vector3D getIntensity(const Vector3D &dir) const;
 	float getNumberLights() const;
-	float getNumberLightsIntersectP(const Vector3D &p) const;
-	float computeAngle() const;
+	float getNumberLightsWidth() const;
+	float getNumberLightsHeight() const;
 	void distributeLights() const;
 	std::vector<PointLightSource>* getList() const;
 
@@ -30,11 +29,10 @@ private:
 	Vector3D intensity; // (unity: watts/sr)
 	float numberLightsPerWidth;
 	float numberLightsPerHeight;
+	float totalLights;
 	float width; //width of the square
 	float height; //heigth of the square
-	float angle; //angle between plane on (0,0,0) and our pos. This angle will be used to simplify computations.  wi = lsList.at(i).getPosition() - its.itsPoint; if dot(wi, lighsource.normal)>=0, we don't compute it.
 	std::vector<PointLightSource>* lightSourceList;
-	float normal;
 
 	float generateRandomPosition( float size ) const;
 };

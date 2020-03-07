@@ -2,6 +2,7 @@
 #define DIRECTSHADER_H
 
 #include "shader.h"
+#include "../lightsources/plafon.h"
 
 class DirectShader : public Shader
 {
@@ -9,9 +10,14 @@ public:
     DirectShader() = delete;
     DirectShader(Vector3D color_, double maxDist_, Vector3D bgColor_);
 
-    virtual Vector3D computeColor(const Ray &r,
+    virtual Vector3D computeColor(const Ray& r,
+        const std::vector<Shape*>& objList,
+        const std::vector<PointLightSource>& lsList) const;
+
+    Vector3D computeColor(const Ray &r,
                              const std::vector<Shape*> &objList,
-                             const std::vector<PointLightSource> &lsList) const;
+                             const std::vector<PointLightSource> &lsList,
+                             const Plafon &p) const;
     bool hasSpecular();
     bool hasDiffuseOrGlossy();
 

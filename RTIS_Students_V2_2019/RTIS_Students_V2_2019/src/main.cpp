@@ -108,8 +108,8 @@ void buildSceneSphere(Camera* &cam, Film* &film,
 
 }
 
-void raytrace(Camera* &cam, Shader* &shader, Film* &film,
-              std::vector<Shape*>* &objectsList, std::vector<PointLightSource>* &lightSourceList)
+void raytrace(Camera* &cam, DirectShader* &shader, Film* &film,
+              std::vector<Shape*>* &objectsList, std::vector<PointLightSource>* &lightSourceList, Plafon *&p)
 {
     unsigned int sizeBar = 40;
 
@@ -135,7 +135,8 @@ void raytrace(Camera* &cam, Shader* &shader, Film* &film,
             Ray cameraRay = cam->generateRay(x, y);
 
             // Compute ray color according to the used shader
-            Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList );
+            Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList, *p );
+            //Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
 
             // Store the pixel color
             film->setPixelValue(col, lin, pixelColor);
@@ -184,21 +185,23 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     Shape* backPlan = new InfinitePlane(Vector3D(0, 0, 3 * offset), Vector3D(0, 0, -1), blueDiffuse);
     Shape* frontPlan = new InfinitePlane(Vector3D(0, 0, -offset), Vector3D(0, 0, 1), yellowDiffuse);
     
+    /*
     objectsList->push_back(leftPlan);
     objectsList->push_back(rightPlan);
     objectsList->push_back(topPlan);
     objectsList->push_back(bottomPlan);
     objectsList->push_back(backPlan);
-    
+    */
+
     // Place the Spheres inside the Cornell Box
     Matrix4x4 sphereTransform1;
     double radius = 1;
     sphereTransform1 = Matrix4x4::translate(Vector3D(-offset + radius, -offset + radius, 3.5));
 	//sphereTransform1 = Matrix4x4::translate(Vector3D(0, 0, 2));
-    Shape* s1 = new Sphere(1.5, sphereTransform1, mirror);
+    Shape* s1 = new Sphere(1.5, sphereTransform1, yellowDiffuse);
     Matrix4x4 sphereTransform2;
     sphereTransform2 = Matrix4x4::translate(Vector3D(1.0, 0.0, 2));
-    Shape* s2 = new Sphere(1, sphereTransform2, refraction);
+    Shape* s2 = new Sphere(1, sphereTransform2, blue);
     Matrix4x4 sphereTransform3;
     radius = 1;
     sphereTransform3 = Matrix4x4::translate(Vector3D(0.3, -offset + radius, 5));
@@ -227,7 +230,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     int numberLightsPerHeight = 100;
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
 
-	Plafon* plafonaco = new Plafon(Vector3D(0, 2.5, 3), Vector3D(1,1,1), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
+	Plafon* plafonaco = new Plafon(Vector3D(-3, 2.5, 3), Vector3D(10, 10, 10), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
 	plafonaco->distributeLights();
 	lightSourceList = new std::vector<PointLightSource>;
 
@@ -238,7 +241,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
 }
 
 void buildSoftShadowScene(Camera*& cam, Film*& film,
-    std::vector<Shape*>*& objectsList, std::vector<PointLightSource>*& lightSourceList)
+    std::vector<Shape*>*& objectsList, std::vector<PointLightSource>*& lightSourceList, Plafon *&areaLight)
 {
     /* **************************** */
     /* Declare and place the camera */
@@ -253,12 +256,13 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     /* ********* */
     Material* greyDiffuse = new Phong(Vector3D(0.8, 0.8, 0.8), Vector3D(0, 0, 0), 100);
     Material* red_100 = new Phong(Vector3D(0.7, 0.2, 0.3), Vector3D(0.7, 0.7, 0.2), 100);
+    Material* mirror = new Mirror(Vector3D(0.0, 0.9, 0.9), Vector3D(0.1, 0.9, 0.9), 50);
 
     /* ***** */
     /* Plane */
     /* ***** */
     objectsList = new std::vector<Shape*>;
-    float offset = 3;
+    float offset = 2;
     Shape* bottomPlan = new InfinitePlane(Vector3D(0, -offset, 0), Vector3D(0, 1, 0), greyDiffuse);
     objectsList->push_back(bottomPlan);
 
@@ -276,7 +280,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
     lightSourceList = new std::vector<PointLightSource>;
 
-    Plafon* areaLight = new Plafon(Vector3D(0, 3, 3), Vector3D(3, 3, 3), numberLightsPerWidth, numberLightsPerHeight, 4, 4);
+    areaLight = new Plafon(Vector3D(-3, 2.5, 3), Vector3D(0.7, 0.7, 0.7), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
     areaLight->distributeLights();
     for (int i = 0; i < totalNumberLights; i++)
     {
@@ -300,7 +304,7 @@ int main()
     Vector3D intersectionColor(1,0,0);
     //Shader *shader = new IntersectionShader (intersectionColor, bgColor);
 	Shader *shader = new DepthShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
-    Shader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
+    DirectShader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
     Shader* globalShader = new GlobalShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
 
     // Declare pointers to all the variables which describe the scene
@@ -308,13 +312,15 @@ int main()
     std::vector<Shape*> *objectsList;
     std::vector<PointLightSource> *lightSourceList;
 
+    Plafon *areaLight;
+
     // Build the scene
     //buildSceneSphere(cam, film, objectsList, lightSourceList);
-    buildSceneCornellBox(cam, film, objectsList, lightSourceList);
-    //buildSoftShadowScene(cam, film, objectsList, lightSourceList);
+    //buildSceneCornellBox(cam, film, objectsList, lightSourceList);
+    buildSoftShadowScene(cam, film, objectsList, lightSourceList, areaLight);
 
     // Launch some rays!
-    raytrace(cam, directShader, film, objectsList, lightSourceList);
+    raytrace(cam, directShader, film, objectsList, lightSourceList, areaLight);
 
     // Save the final result to file
     std::cout << "\n\nSaving the result to file output.bmp\n" << std::endl;

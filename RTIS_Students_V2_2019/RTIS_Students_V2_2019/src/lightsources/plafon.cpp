@@ -5,6 +5,7 @@ Plafon::Plafon(Vector3D pos_, Vector3D intensity_, float numberLightsPerHeight_,
 	pos(pos_), intensity(intensity_), numberLightsPerHeight(numberLightsPerHeight_),  numberLightsPerWidth(numberLightsPerWidth_), width(width_), height(height_)
 { 
 	lightSourceList = new std::vector<PointLightSource>;
+	this->totalLights = this->numberLightsPerHeight * this->numberLightsPerWidth;
 }
 
 Vector3D Plafon::getPosition() const
@@ -12,33 +13,19 @@ Vector3D Plafon::getPosition() const
 	return pos;
 }
 
-Vector3D Plafon::getIntensity(const Vector3D &p) const
-{
-	double sqDistance = (p - pos).lengthSq();
-
-	Vector3D result = (intensity*getNumberLightsIntersectP(p)) / sqDistance;
-	return result;
-}
-
 float Plafon::getNumberLights() const
 {
 	return numberLightsPerHeight + numberLightsPerWidth;
 }
 
-float Plafon::getNumberLightsIntersectP(const Vector3D &p) const
+float Plafon::getNumberLightsHeight() const
 {
-	float numberLights = 0;
-	Vector3D wi;
-	for (int i = 0; i < lightSourceList->size(); i++) 
-	{
-		wi = lightSourceList->at(i).getPosition();
-		if (dot(wi, normal)<0) 
-		{
-			numberLights++;
-		}
-	}
-	//for every light source point, if light.pos intersects with point p, numberoflights ++
-	return numberLights;
+	return this->numberLightsPerHeight;
+}
+
+float Plafon::getNumberLightsWidth() const
+{
+	return this->numberLightsPerWidth;
 }
 
 void Plafon::distributeLights() const
