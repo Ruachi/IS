@@ -135,8 +135,8 @@ void raytrace(Camera* &cam, DirectShader* &shader, Film* &film,
             Ray cameraRay = cam->generateRay(x, y);
 
             // Compute ray color according to the used shader
-            //Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList, *p );
-            Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
+            Vector3D pixelColor = shader->computeColor( cameraRay, *objectsList, *lightSourceList, *p );
+            //Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
 
             // Store the pixel color
             film->setPixelValue(col, lin, pixelColor);
@@ -304,7 +304,7 @@ int main()
     Vector3D intersectionColor(1,0,0);
     //Shader *shader = new IntersectionShader (intersectionColor, bgColor);
 	Shader *shader = new DepthShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
-    DirectShader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
+    DirectShader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 1, bgColor);
     Shader* globalShader = new GlobalShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
 
     // Declare pointers to all the variables which describe the scene

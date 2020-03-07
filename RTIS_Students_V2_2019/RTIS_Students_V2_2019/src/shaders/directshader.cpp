@@ -110,14 +110,16 @@ Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidt
         wi = wi.normalized();
         Ray visibilityRay = Ray(its.itsPoint, wi);
         visibilityRay.maxT = d;
+        Vector3D areaNormal = (0, 0, 1);
+        float theta_y = dot(areaNormal, wo);
         if (!Utils::hasIntersection(visibilityRay, objList))
         {
-            auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint) * 0.25,
-                its.shape->getMaterial().getReflectance(its.normal, wo, wi));
+            auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint), // * 0.25,
+                its.shape->getMaterial().getReflectance(its.normal, wo, wi)) * theta_y / sqrt(d);
         }
         else 
         {
-            if (halfSize > 2)
+            if (halfSize > 2 && this->maxDist > 0)
             {
                 auxiliarColor += this->calculateFourPoints(i, j, halfSize, nWidth, wo,
                     objList, lsList, its);
@@ -178,15 +180,17 @@ Vector3D DirectShader::computeColor(const Ray& r,
             int position;
             int nL = lsList.size();
             std::vector<int> positions;
+            Vector3D areaNormal = (0, 0, 1);
 
-            for (size_t i = halfSize; i < p.getNumberLightsWidth() - halfSize; i += chunckSize)
+            for (size_t i = halfSize; i < p.getNumberLightsWidth() - chunckSize; i += chunckSize)
             {
-                for (size_t j = halfSize; j < p.getNumberLightsHeight() - halfSize; j += chunckSize)
+                for (size_t j = halfSize; j < p.getNumberLightsHeight() - chunckSize; j += chunckSize)
                 {
                     position = i * p.getNumberLightsWidth() + j;
                     Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
                     float d = wi.length();
                     wi = wi.normalized();
+                    float theta_y = dot(areaNormal, wo);
 
                     if (dot(wi, its.normal) > 0)
                     {
@@ -194,62 +198,14 @@ Vector3D DirectShader::computeColor(const Ray& r,
                         visibilityRay.maxT = d;
                         if (!Utils::hasIntersection(visibilityRay, objList))
                         {
-                            
                             for (int times = 0; times < 4; times++)
                             {
                                 finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint), // * (1 + chunckSize/10),
-                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi));
+                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi)) * theta_y / sqrt(d);
                             }
                         }
-                        
                         else 
-                        {
-                         /*
-                            position = (position - 2 * p.getNumberLightsWidth()) - halfSize / 2;
-                            positions.push_back(position);
-                            position = (position - 2 * p.getNumberLightsWidth()) + halfSize / 2;
-                            positions.push_back(position);
-                            position = (position + 2 * p.getNumberLightsWidth()) - halfSize / 2;
-                            positions.push_back(position);
-                            position = (position + 2 * p.getNumberLightsWidth()) + halfSize / 2;
-                            positions.push_back(position);
-                            
-                            for (int a = 0; a < 4; a++)
-                            {
-                                int aux;
-                                if (a == 0)
-                                { 
-                                    Vector3D wi = lsList.at((i - halfSize) * p.getNumberLightsWidth() + j - halfSize).getPosition() - its.itsPoint; 
-                                    aux = (i - halfSize) * p.getNumberLightsWidth() + j - halfSize;
-                                }
-                                else if (a == 1)
-                                {
-                                    Vector3D wi = lsList.at((i - halfSize) * p.getNumberLightsWidth() + j + halfSize).getPosition() - its.itsPoint;
-                                    aux = (i - halfSize) * p.getNumberLightsWidth() + j + halfSize;
-                                }
-                                else if (a == 2)
-                                {
-                                    Vector3D wi = lsList.at((i + halfSize) * p.getNumberLightsWidth() + j - halfSize).getPosition() - its.itsPoint;
-                                    aux = (i + halfSize) * p.getNumberLightsWidth() + j - halfSize;
-                                }
-                                else if (a == 3) 
-                                {
-                                    Vector3D wi = lsList.at((i + halfSize) * p.getNumberLightsWidth() + j + halfSize).getPosition() - its.itsPoint;
-                                    aux = (i + halfSize) * p.getNumberLightsWidth() + j + halfSize;
-                                }
-                                
-                                float d = wi.length();
-                                wi = wi.normalized();
-                                Ray visibilityRay = Ray(its.itsPoint, wi);
-                                visibilityRay.maxT = d;
-                                if (!Utils::hasIntersection(visibilityRay, objList))
-                                {
-                                    finalColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint) * 0.25,
-                                        its.shape->getMaterial().getReflectance(its.normal, wo, wi));
-                                }
-                            }
-                            */
-                         
+                        {                         
                             finalColor += this->calculateFourPoints(i, j, halfSize, p.getNumberLightsWidth(), wo,
                                 objList, lsList, its);
                         }
@@ -257,7 +213,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
                 }
             }
         }
-        return finalColor;
+        return finalColor *36 / (100 * 100);
     }
     return bgColor;
 }
