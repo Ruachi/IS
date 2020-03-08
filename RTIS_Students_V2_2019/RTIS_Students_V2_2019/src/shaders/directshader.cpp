@@ -78,7 +78,8 @@ Vector3D DirectShader::computeColor(const Ray& r,
 }
 
 Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidth, Vector3D wo,
-    const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList, Intersection its, int depth) const
+    const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList, 
+    Intersection its, int depth, int &counter) const
 {
     Vector3D auxiliarColor;
     for (int a = 0; a < 4; a++)
@@ -114,6 +115,7 @@ Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidt
         float theta_y = dot(areaNormal, wo);
         if (!Utils::hasIntersection(visibilityRay, objList))
         {
+            counter++;
             auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint) * 0.25,
                 its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
         }
@@ -123,9 +125,10 @@ Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidt
             {
                 if (i > halfSize&& i < nWidth - halfSize && j > halfSize&& j < nWidth - halfSize)
                 {
+                    counter++;
                     depth--;
                     auxiliarColor += this->calculateFourPoints(i, j, halfSize, nWidth, wo,
-                        objList, lsList, its, depth);
+                        objList, lsList, its, depth, counter);
                 }
             }
         }
@@ -141,6 +144,8 @@ Vector3D DirectShader::computeColor(const Ray& r,
     Vector3D finalColor;
     Intersection its;
     Vector3D wo = -r.d;
+
+    int counter = 0;    //to know number of lights used
 
     if (Utils::getClosestIntersection(r, objList, its))
     {
@@ -205,20 +210,22 @@ Vector3D DirectShader::computeColor(const Ray& r,
                         {
                             for (int times = 0; times < 4; times++)
                             {
-                                finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint), // * (1 + chunckSize/10),
-                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi)); // *theta_y / sqrt(d);
+                                counter++;
+                                finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
                             }
                         }
                         else 
                         {                         
                             finalColor += this->calculateFourPoints(i, j, halfSize, p.getNumberLightsWidth(), wo,
-                                objList, lsList, its, depth);
+                                objList, lsList, its, depth, counter);
                         }
                     }
                 }
             }
         }
-        return finalColor; // *36 / (100 * 100);
+        std::cout << counter << std::endl;
+        return finalColor;// *36 / counter;
     }
     return bgColor;
 }

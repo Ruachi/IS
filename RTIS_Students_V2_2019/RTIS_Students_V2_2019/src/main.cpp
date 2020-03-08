@@ -280,7 +280,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
     lightSourceList = new std::vector<PointLightSource>;
 
-    areaLight = new Plafon(Vector3D(-10, 2.5, 3), Vector3D(10, 10, 10), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
+    areaLight = new Plafon(Vector3D(-10, 2.5, 3), Vector3D(3, 3, 3), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
     areaLight->distributeLights();
     for (int i = 0; i < totalNumberLights; i++)
     {

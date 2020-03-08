@@ -25,7 +25,7 @@ private:
     double maxDist; // Used to store the value of the maximum distance which can be visualized
     Vector3D color; // Used to store the visualization color
     Vector3D calculateFourPoints(int i, int j, int halfSize, int nWidth, Vector3D wo,
-        const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList, Intersection its, int depth) const;    //to calculate more points in the soft shadow
+        const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList, Intersection its, int depth, int &counter) const;    //to calculate more points in the soft shadow
 };
 
 #endif // DIRECTSHADER_H
