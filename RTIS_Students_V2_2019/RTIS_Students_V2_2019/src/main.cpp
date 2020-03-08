@@ -280,7 +280,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
     lightSourceList = new std::vector<PointLightSource>;
 
-    areaLight = new Plafon(Vector3D(-10, 2.5, 3), Vector3D(1, 1, 1), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
+    areaLight = new Plafon(Vector3D(-10, 2.5, 3), Vector3D(10, 10, 10), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
     areaLight->distributeLights();
     for (int i = 0; i < totalNumberLights; i++)
     {
@@ -304,7 +304,7 @@ int main()
     Vector3D intersectionColor(1,0,0);
     //Shader *shader = new IntersectionShader (intersectionColor, bgColor);
 	Shader *shader = new DepthShader(Vector3D(0.4, 1, 0.4), 8, bgColor);
-    DirectShader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 1, bgColor);
+    DirectShader *directShader = new DirectShader(Vector3D(0.2, 0.5, 0.4), 3, bgColor);
     Shader* globalShader = new GlobalShader(Vector3D(0.2, 0.5, 0.4), 8, bgColor);
 
     // Declare pointers to all the variables which describe the scene

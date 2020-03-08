@@ -78,7 +78,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
 }
 
 Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidth, Vector3D wo,
-    const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList, Intersection its) const
+    const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList, Intersection its, int depth) const
 {
     Vector3D auxiliarColor;
     for (int a = 0; a < 4; a++)
@@ -114,15 +114,19 @@ Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidt
         float theta_y = dot(areaNormal, wo);
         if (!Utils::hasIntersection(visibilityRay, objList))
         {
-            auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint), // * 0.25,
-                its.shape->getMaterial().getReflectance(its.normal, wo, wi)) * theta_y / sqrt(d);
+            auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint) * 0.25,
+                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
         }
         else 
         {
-            if (halfSize > 2 && this->maxDist > 0)
+            if (halfSize > 2 && depth > 0)
             {
-                auxiliarColor += this->calculateFourPoints(i, j, halfSize, nWidth, wo,
-                    objList, lsList, its);
+                if (i > halfSize&& i < nWidth - halfSize && j > halfSize&& j < nWidth - halfSize)
+                {
+                    depth--;
+                    auxiliarColor += this->calculateFourPoints(i, j, halfSize, nWidth, wo,
+                        objList, lsList, its, depth);
+                }
             }
         }
     }
@@ -175,9 +179,10 @@ Vector3D DirectShader::computeColor(const Ray& r,
         }
         else//if Phong
         {
-            int chunckSize = 5;
+            int chunckSize = 10;
             int halfSize = chunckSize / 2;
             int position;
+            int depth = this->maxDist;
             int nL = lsList.size();
             std::vector<int> positions;
             Vector3D areaNormal = (0, 0, 1);
@@ -201,19 +206,19 @@ Vector3D DirectShader::computeColor(const Ray& r,
                             for (int times = 0; times < 4; times++)
                             {
                                 finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint), // * (1 + chunckSize/10),
-                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi)) * theta_y / sqrt(d);
+                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi)); // *theta_y / sqrt(d);
                             }
                         }
                         else 
                         {                         
                             finalColor += this->calculateFourPoints(i, j, halfSize, p.getNumberLightsWidth(), wo,
-                                objList, lsList, its);
+                                objList, lsList, its, depth);
                         }
                     }
                 }
             }
         }
-        return finalColor *36 / (100 * 100);
+        return finalColor; // *36 / (100 * 100);
     }
     return bgColor;
 }
