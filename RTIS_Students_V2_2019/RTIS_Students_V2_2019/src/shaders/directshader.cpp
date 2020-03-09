@@ -111,13 +111,13 @@ Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidt
         wi = wi.normalized();
         Ray visibilityRay = Ray(its.itsPoint, wi);
         visibilityRay.maxT = d;
-        Vector3D areaNormal = (0, 0, 1);
+        Vector3D areaNormal = Vector3D(0, 1, 0);
         float theta_y = dot(areaNormal, wo);
         if (!Utils::hasIntersection(visibilityRay, objList))
         {
             counter++;
-            auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint) * 0.25,
-                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+			auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint)* 0.25,
+				its.shape->getMaterial().getReflectance(its.normal, wo, wi))*theta_y / sqrt(d);
         }
         else 
         {
@@ -184,13 +184,13 @@ Vector3D DirectShader::computeColor(const Ray& r,
         }
         else//if Phong
         {
-            int chunckSize = 10;
+            int chunckSize = 5;
             int halfSize = chunckSize / 2;
             int position;
             int depth = this->maxDist;
             int nL = lsList.size();
             std::vector<int> positions;
-            Vector3D areaNormal = (0, 0, 1);
+            Vector3D areaNormal = Vector3D(0, 1, 0);
 
             for (size_t i = halfSize; i < p.getNumberLightsWidth() - chunckSize; i += chunckSize)
             {
@@ -208,12 +208,12 @@ Vector3D DirectShader::computeColor(const Ray& r,
                         visibilityRay.maxT = d;
                         if (!Utils::hasIntersection(visibilityRay, objList))
                         {
-                            for (int times = 0; times < 4; times++)
-                            {
-                                counter++;
-                                finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
-                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
-                            }
+                            //for (int times = 0; times < 4; times++)
+                            //{
+                            counter++;
+							finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+								its.shape->getMaterial().getReflectance(its.normal, wo, wi))*theta_y / sqrt(d);
+                            //}
                         }
                         else 
                         {                         
@@ -224,8 +224,8 @@ Vector3D DirectShader::computeColor(const Ray& r,
                 }
             }
         }
-        std::cout << counter << std::endl;
-        return finalColor;// *36 / counter;
+        //std::cout << counter << std::endl;
+		return finalColor *36 / counter;
     }
     return bgColor;
 }

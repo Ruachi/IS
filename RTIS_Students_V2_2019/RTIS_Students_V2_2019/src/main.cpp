@@ -246,7 +246,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     /* **************************** */
     /* Declare and place the camera */
     /* **************************** */
-    Matrix4x4 cameraToWorld = Matrix4x4::translate(Vector3D(0, 0, -3));
+    Matrix4x4 cameraToWorld = Matrix4x4::translate(Vector3D(0, 0, -2));
     double fovDegrees = 60;
     double fovRadians = Utils::degreesToRadians(fovDegrees);
     cam = new PerspectiveCamera(cameraToWorld, fovRadians, *film);
@@ -270,7 +270,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     float radius = 1;
     sphereTransform3 = Matrix4x4::translate(Vector3D(0.3, -offset + radius, 5));
     Shape* s3 = new Sphere(radius, sphereTransform3, red_100);
-    objectsList->push_back(s3);
+    //objectsList->push_back(s3);
 
     /* ****** */
     /* Lights */
@@ -280,7 +280,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
     lightSourceList = new std::vector<PointLightSource>;
 
-    areaLight = new Plafon(Vector3D(-10, 2.5, 3), Vector3D(3, 3, 3), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
+    areaLight = new Plafon(Vector3D(-13, 1.5, 6), Vector3D(10, 10, 10), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
     areaLight->distributeLights();
     for (int i = 0; i < totalNumberLights; i++)
     {
