@@ -1,1 +1,14 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v142 (Platform Toolset = 'v142') cannot be found. To build using the v142 build tools, please install v142 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  directshader.cpp
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(54,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(59,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(110,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(115,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(191,23): warning C4244: 'initializing': conversion from 'const double' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(192,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(195,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(201,61): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(203,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(205,35): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(222,107): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(223,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  RTIS_V2.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe

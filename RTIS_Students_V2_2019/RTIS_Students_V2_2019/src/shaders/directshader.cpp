@@ -2,8 +2,8 @@
 #include "../core/utils.h"
 #include "../materials/phong.h"
 
-DirectShader::DirectShader( Vector3D color_, double maxDist_, Vector3D bgColor_ ) :
-	Shader( bgColor_ ), maxDist( maxDist_ ), color( color_ )
+DirectShader::DirectShader(Vector3D color_, double maxDist_, Vector3D bgColor_) :
+    Shader(bgColor_), maxDist(maxDist_), color(color_)
 {}
 
 Vector3D DirectShader::computeColor(const Ray& r,
@@ -15,7 +15,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
     Vector3D wo = -r.d;
 
     if (Utils::getClosestIntersection(r, objList, its))
-    {        
+    {
         if (its.shape->getMaterial().hasSpecular())
         {
             Vector3D wr = Utils::computeReflectionDirection(r.d, its.normal);
@@ -51,89 +51,160 @@ Vector3D DirectShader::computeColor(const Ray& r,
         }
         else//if Phong
         {
-			int nL = lsList.size();
-			for (size_t i = 0; i < nL; i++)
-			{
-				//direction light to intersection
-				Vector3D wi = lsList.at(i).getPosition() - its.itsPoint;
-				float d = wi.length();
-				wi = wi.normalized();
+            int nL = lsList.size();
+            for (size_t i = 0; i < nL; i++)
+            {
+                //direction light to intersection
+                Vector3D wi = lsList.at(i).getPosition() - its.itsPoint;
+                float d = wi.length();
+                wi = wi.normalized();
 
-				if (dot(wi, its.normal) > 0)
-				{
+                if (dot(wi, its.normal) > 0)
+                {
                     //Ray from the intersection point with direction to light source
                     Ray shadowRay = Ray(its.itsPoint, wi);
-					shadowRay.maxT = d;
-					if (!Utils::hasIntersection(shadowRay, objList))
-					{
-						finalColor += Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint),
-							its.shape->getMaterial().getReflectance(its.normal, wo, wi));
-					}
-				}
-			}
-	    }
-     return finalColor;
+                    shadowRay.maxT = d;
+                    if (!Utils::hasIntersection(shadowRay, objList))
+                    {
+                        finalColor += Utils::multiplyPerCanal(lsList.at(i).getIntensity(its.itsPoint),
+                            its.shape->getMaterial().getReflectance(its.normal, wo, wi));
+                    }
+                }
+            }
+        }
+        return finalColor;
     }
     return bgColor;
 }
 
 Vector3D DirectShader::calculateFourPoints(int i, int j, int halfSize, int nWidth, Vector3D wo,
-    const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList, 
-    Intersection its, int depth, int &counter) const
+    const std::vector<Shape*>& objList, const std::vector<PointLightSource>& lsList,
+    Intersection its, int depth, int& counter) const
 {
+
     Vector3D auxiliarColor;
-    for (int a = 0; a < 4; a++)
+
+    for (int points = 0; points < 4; points++)
     {
         int aux;
         Vector3D wi;
-        if (a == 0)
+        if (points == 0)
         {
             wi = lsList.at((i - halfSize) * nWidth + j - halfSize).getPosition() - its.itsPoint;
             aux = (i - halfSize) * nWidth + j - halfSize;
         }
-        else if (a == 1)
+        else if (points == 1)
         {
-            wi = lsList.at((i - halfSize) * nWidth + j + halfSize).getPosition() - its.itsPoint;
-            aux = (i - halfSize) * nWidth + j + halfSize;
+            wi = lsList.at((i - halfSize) * nWidth + j + halfSize - 1).getPosition() - its.itsPoint;
+            aux = (i - halfSize) * nWidth + j + halfSize - 1;
         }
-        else if (a == 2)
+        else if (points == 2)
         {
-            wi = lsList.at((i + halfSize) * nWidth + j - halfSize).getPosition() - its.itsPoint;
-            aux = (i + halfSize) * nWidth + j - halfSize;
+            wi = lsList.at((i + halfSize - 1) * nWidth + j - halfSize).getPosition() - its.itsPoint;
+            aux = (i + halfSize - 1) * nWidth + j - halfSize;
         }
-        else if (a == 3)
+        else if (points == 3)
         {
-            wi = lsList.at((i + halfSize) * nWidth  + j + halfSize).getPosition() - its.itsPoint;
-            aux = (i + halfSize) * nWidth + j + halfSize;
+            wi = lsList.at((i + halfSize - 1) * nWidth + j + halfSize - 1).getPosition() - its.itsPoint;
+            aux = (i + halfSize - 1) * nWidth + j + halfSize - 1;
         }
 
         float d = wi.length();
         wi = wi.normalized();
         Ray visibilityRay = Ray(its.itsPoint, wi);
         visibilityRay.maxT = d;
-        Vector3D areaNormal = Vector3D(0, 1, 0);
+        Vector3D areaNormal = (0, 1, 0);
         float theta_y = dot(areaNormal, wo);
         if (!Utils::hasIntersection(visibilityRay, objList))
         {
             counter++;
-			auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint)* 0.25,
-				its.shape->getMaterial().getReflectance(its.normal, wo, wi))*theta_y / sqrt(d);
-        }
-        else 
-        {
-            if (halfSize > 2 && depth > 0)
+            for (int i = 0; i < halfSize * halfSize; i++)
             {
-                if (i > halfSize&& i < nWidth - halfSize && j > halfSize&& j < nWidth - halfSize)
+                auxiliarColor += Utils::multiplyPerCanal(lsList.at(aux).getIntensity(its.itsPoint), // * 0.25,
+                    its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+            }
+        }
+        else
+        {
+            if (halfSize >= 2 && depth > 0)
+            {
+                halfSize = halfSize / 2;
+                for (int a = i - halfSize; a < i + halfSize - 1; a++)
+                {
+                    for (int b = j - halfSize; b < j + halfSize - 1; b++)
+                    {
+
+                        long position = a * (2 * halfSize) + b;
+                        Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
+                        float d = wi.length();
+                        wi = wi.normalized();
+                        Ray visibilityRay = Ray(its.itsPoint, wi);
+                        visibilityRay.maxT = d;
+                        Vector3D areaNormal = (0, 1, 0);
+                        float theta_y = dot(areaNormal, wo);
+                        if (!Utils::hasIntersection(visibilityRay, objList))
+                        {
+
+                            counter++;
+                            auxiliarColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));
+
+                        }
+                    }
+                }
+                /*
+                if (i > halfSize && i < nWidth - halfSize && j > halfSize && j < nWidth - halfSize)
                 {
                     counter++;
                     depth--;
-                    auxiliarColor += this->calculateFourPoints(i, j, halfSize, nWidth, wo,
+                    auxiliarColor += this->calculateFourPoints(i, j, halfSize / 2, nWidth, wo,
                         objList, lsList, its, depth, counter);
+                }
+                */
+            }
+        }
+    }
+    return auxiliarColor;
+
+    /*
+    for (int a = i - halfSize; a < i + halfSize -1; a++)
+    {
+        for (int b = j - halfSize; b < j + halfSize - 1; b++)
+        {
+
+            long position = a * (2 * halfSize) + b;
+            Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
+            float d = wi.length();
+            wi = wi.normalized();
+            Ray visibilityRay = Ray(its.itsPoint, wi);
+            visibilityRay.maxT = d;
+            Vector3D areaNormal = (0, 1, 0);
+            float theta_y = dot(areaNormal, wo);
+            if (!Utils::hasIntersection(visibilityRay, objList))
+            {
+
+                counter++;
+                auxiliarColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                    its.shape->getMaterial().getReflectance(its.normal, wo, wi));
+
+            }
+            else
+            {
+                if (halfSize > 2 && depth > 0)
+                {
+                    if (i > halfSize&& i < nWidth - halfSize && j > halfSize&& j < nWidth - halfSize)
+                    {
+                        counter++;
+                        depth--;
+                        auxiliarColor += this->calculateFourPoints(i, j, halfSize / 2, nWidth, wo,
+                            objList, lsList, its, depth, counter);
+                    }
                 }
             }
         }
     }
     return auxiliarColor;
+    */
 }
 
 Vector3D DirectShader::computeColor(const Ray& r,
@@ -190,11 +261,11 @@ Vector3D DirectShader::computeColor(const Ray& r,
             int depth = this->maxDist;
             int nL = lsList.size();
             std::vector<int> positions;
-            Vector3D areaNormal = Vector3D(0, 1, 0);
+            Vector3D areaNormal = (0, 1, 0);
 
-            for (size_t i = halfSize; i < p.getNumberLightsWidth() - chunckSize; i += chunckSize)
+            for (size_t i = halfSize; i <= p.getNumberLightsWidth() - halfSize; i += chunckSize)
             {
-                for (size_t j = halfSize; j < p.getNumberLightsHeight() - chunckSize; j += chunckSize)
+                for (size_t j = halfSize; j <= p.getNumberLightsHeight() - halfSize; j += chunckSize)
                 {
                     position = i * p.getNumberLightsWidth() + j;
                     Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
@@ -208,16 +279,16 @@ Vector3D DirectShader::computeColor(const Ray& r,
                         visibilityRay.maxT = d;
                         if (!Utils::hasIntersection(visibilityRay, objList))
                         {
-                            //for (int times = 0; times < 4; times++)
-                            //{
-                            counter++;
-							finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
-								its.shape->getMaterial().getReflectance(its.normal, wo, wi))*theta_y / sqrt(d);
-                            //}
+                            for (int times = 0; times < chunckSize * chunckSize; times++)
+                            {
+                                counter++;
+                                finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                    its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                            }
                         }
-                        else 
-                        {                         
-                            finalColor += this->calculateFourPoints(i, j, halfSize, p.getNumberLightsWidth(), wo,
+                        else
+                        {
+                            finalColor += this->calculateFourPoints(i, j, halfSize / 2, p.getNumberLightsWidth(), wo,
                                 objList, lsList, its, depth, counter);
                         }
                     }
@@ -225,7 +296,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
             }
         }
         //std::cout << counter << std::endl;
-		return finalColor *36 / counter;
+        return finalColor; // *36 / counter;
     }
     return bgColor;
 }

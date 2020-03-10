@@ -1,2 +1,0 @@
-# IS
-Imatge Sintètica

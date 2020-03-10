@@ -1,8 +1,26 @@
 ﻿  main.cpp
-D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(168,69): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-  Generando código
-  1 of 370 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(169,68): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(233,91): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(233,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(283,89): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(283,67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  directshader.cpp
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(54,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(59,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(112,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(117,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(139,33): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(144,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(261,23): warning C4244: 'initializing': conversion from 'const double' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(262,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(270,61): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(272,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(274,35): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(291,111): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(292,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating code
+  8 of 380 functions ( 2.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
-  Generación de código finalizada
-  RTIS_V2.vcxproj -> D:\Universitat\Quart\IS\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Release\RTIS_V2.exe
+    30 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  RTIS_V2.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Release\RTIS_V2.exe
