@@ -288,7 +288,181 @@ Vector3D DirectShader::computeColor(const Ray& r,
                         }
                         else if( chunckSize > 1)
                         {
-							//starts at this position
+
+                            //We compute the four corners inside chunckSize
+                            int xsquareLeftTop = i - halfSize;
+                            int ysquareLeftTop = j - halfSize;
+
+                            int xsquareRightTop = i + halfSize;
+                            int ysquareRightTop = j - halfSize;
+
+                            int xsquareLeftBottom = i - halfSize;
+                            int ysquareLeftBottom = j + halfSize;
+
+                            int xsquareRightBottom = i + halfSize;
+                            int ysquareRightBottom = j + halfSize;
+
+                            std::vector<int> corners;
+                            corners.push_back(xsquareLeftTop);
+                            corners.push_back(ysquareLeftTop);
+                            corners.push_back(xsquareRightTop);
+                            corners.push_back(ysquareRightTop);
+                            corners.push_back(xsquareLeftBottom);
+                            corners.push_back(ysquareLeftBottom);
+                            corners.push_back(xsquareRightBottom);
+                            corners.push_back(ysquareRightBottom);
+
+                            //We now throw a ray towards every corner. If it is visible, we will sum the contribution of all light points of chunkSize/4. Else, we throw a ray to every light.
+                            int index = 0;
+                            for (int corner = 0; corner < 4; corner++) 
+                            {
+                                position = corners[index] * p.getNumberLightsWidth() + corners[index+1];
+                                
+                                Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
+                                float d = wi.length();
+                                wi = wi.normalized();
+                                Ray visibilityRay = Ray(its.itsPoint, wi);
+                                visibilityRay.maxT = d;
+
+                                if (dot(wi, its.normal) > 0)
+                                {
+                                    if (!Utils::hasIntersection(visibilityRay, objList))
+                                    {
+                                        for (int times = 0; times < halfSize * halfSize; times++)
+                                        {
+                                            counter++;
+                                            finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                        }
+                                    }
+                                    else 
+                                    {
+                                        int xStart = corners[index];
+                                        int yStart = corners[index+1];
+
+                                        //left top
+                                        if (index == 0) 
+                                        {
+                                            for (int a = xStart; a< xStart+halfSize-1; a++) 
+                                            {
+                                                for (int b = yStart; b > halfSize + 1; b--) 
+                                                {
+                                                    position = a * p.getNumberLightsWidth() + b;
+                                                    Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
+
+                                                    float d = wi.length();
+                                                    wi = wi.normalized();
+                                                    float theta_y = dot(areaNormal, wo);
+                                                    Ray visibilityRay = Ray(its.itsPoint, wi);
+                                                    visibilityRay.maxT = d;
+                                                    if (dot(wi, its.normal) > 0)
+                                                    {
+                                                        if (!Utils::hasIntersection(visibilityRay, objList))
+                                                        {
+                                                            counter++;
+                                                            finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //rigth top
+                                        else if (index == 1) 
+                                        {
+                                            for (int a = xStart; a> halfSize+1; a--) 
+                                            {
+                                                for (int b = yStart; b > halfSize +1; b--) 
+                                                {
+                                                    position = a * p.getNumberLightsWidth() + b;
+                                                    Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
+
+                                                    float d = wi.length();
+                                                    wi = wi.normalized();
+                                                    float theta_y = dot(areaNormal, wo);
+                                                    Ray visibilityRay = Ray(its.itsPoint, wi);
+                                                    visibilityRay.maxT = d;
+                                                    if (dot(wi, its.normal) > 0)
+                                                    {
+                                                        if (!Utils::hasIntersection(visibilityRay, objList))
+                                                        {
+                                                            counter++;
+                                                            finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //left bottom
+                                        else if (index == 2) 
+                                        {
+                                            for (int a = xStart; a < xStart + halfSize - 1; a++)
+                                            {
+                                                for (int b = yStart; b < yStart + halfSize - 1; b++)
+                                                {
+                                                    position = a * p.getNumberLightsWidth() + b;
+                                                    Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
+
+                                                    float d = wi.length();
+                                                    wi = wi.normalized();
+                                                    float theta_y = dot(areaNormal, wo);
+                                                    Ray visibilityRay = Ray(its.itsPoint, wi);
+                                                    visibilityRay.maxT = d;
+                                                    if (dot(wi, its.normal) > 0)
+                                                    {
+                                                        if (!Utils::hasIntersection(visibilityRay, objList))
+                                                        {
+                                                            counter++;
+                                                            finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        //left bottom
+                                        else if (index == 3) 
+                                        {
+                                            for (int a = xStart; a > halfSize + 1; a--)
+                                            {
+                                                for (int b = yStart; b < yStart + halfSize - 1; b++)
+                                                {
+                                                    position = a * p.getNumberLightsWidth() + b;
+                                                    Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
+
+                                                    float d = wi.length();
+                                                    wi = wi.normalized();
+                                                    float theta_y = dot(areaNormal, wo);
+                                                    Ray visibilityRay = Ray(its.itsPoint, wi);
+                                                    visibilityRay.maxT = d;
+                                                    if (dot(wi, its.normal) > 0)
+                                                    {
+                                                        if (!Utils::hasIntersection(visibilityRay, objList))
+                                                        {
+                                                            counter++;
+                                                            finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
+                                index++;
+                            }
+                            index = 0;
+                            
+
+
+
+
+
+                            /*
+                            //compute all points
+							//starts at this position, (0,0) of chunkSize
 							int xStart = i - halfSize;
 							int yStart = j - halfSize;
 
@@ -316,7 +490,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
 								}
 								
 							}
-							
+							*/
 
                         }
                     }

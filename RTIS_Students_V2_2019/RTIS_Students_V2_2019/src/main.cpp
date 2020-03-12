@@ -135,8 +135,8 @@ void raytrace(Camera*& cam, DirectShader*& shader, Film*& film,
             Ray cameraRay = cam->generateRay(x, y);
 
             // Compute ray color according to the used shader
-            //Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList, *p);
-            Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
+            Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList, *p);
+            //Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
 
             // Store the pixel color
             film->setPixelValue(col, lin, pixelColor);
@@ -226,8 +226,8 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     lightSourceList->push_back(pointLS2);
     lightSourceList->push_back(pointLS3);*/
 
-    int numberLightsPerWidth = 100;
-    int numberLightsPerHeight = 100;
+    int numberLightsPerWidth = 90;
+    int numberLightsPerHeight = 90;
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
 
     plafonaco = new Plafon(Vector3D(0, 2.5, 3), Vector3D(1, 1, 1), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
