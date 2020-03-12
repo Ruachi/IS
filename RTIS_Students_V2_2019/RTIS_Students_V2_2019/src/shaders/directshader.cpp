@@ -255,7 +255,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
         }
         else//if Phong
         {
-            int chunckSize = 18;
+            int chunckSize = 12;
             int halfSize = chunckSize / 2;
             int position;
             int depth = this->maxDist;

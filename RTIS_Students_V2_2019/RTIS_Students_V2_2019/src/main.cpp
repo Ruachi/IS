@@ -2,6 +2,7 @@
 #include <stdlib.h> /* srand, rand */
 #include <vector>
 #include <algorithm>
+#include <chrono>
 
 #include "core/film.h"
 #include "core/matrix4x4.h"
@@ -109,7 +110,7 @@ void buildSceneSphere(Camera*& cam, Film*& film,
 }
 
 void raytrace(Camera*& cam, DirectShader*& shader, Film*& film,
-    std::vector<Shape*>*& objectsList, std::vector<PointLightSource>*& lightSourceList, Plafon*& p)
+    std::vector<Shape*>*& objectsList, std::vector<PointLightSource>*& lightSourceList, Plafon*& p, bool perfect)
 {
     unsigned int sizeBar = 40;
 
@@ -135,8 +136,14 @@ void raytrace(Camera*& cam, DirectShader*& shader, Film*& film,
             Ray cameraRay = cam->generateRay(x, y);
 
             // Compute ray color according to the used shader
-            Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList, *p);
-            //Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
+            Vector3D pixelColor;
+            if (!perfect)
+            {
+                pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList, *p);
+            }
+            else {
+                pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
+            }
 
             // Store the pixel color
             film->setPixelValue(col, lin, pixelColor);
@@ -297,8 +304,9 @@ int main()
 
     // Create an empty film
     Film* film;
+    Film* perfectFilm;
     film = new Film(720, 576);
-
+    perfectFilm = new Film(720, 576);
 
     // Declare the shader
     Vector3D bgColor(0.0, 0.0, 0.0); // Background color (for rays which do not intersect anything)
@@ -315,17 +323,36 @@ int main()
 
     Plafon* areaLight;
 
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
     // Build the scene
     //buildSceneSphere(cam, film, objectsList, lightSourceList);
     //buildSceneCornellBox(cam, film, objectsList, lightSourceList, areaLight);
     buildSoftShadowScene(cam, film, objectsList, lightSourceList, areaLight);
 
     // Launch some rays!
-    raytrace(cam, directShader, film, objectsList, lightSourceList, areaLight);
+    raytrace(cam, directShader, film, objectsList, lightSourceList, areaLight, false);
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();   //tempo for non perfect film
+    raytrace(cam, directShader, perfectFilm, objectsList, lightSourceList, areaLight, true);
+
+    Vector3D ratio = 0;
+    for (int i = 0; i < film->getWidth(); i++)
+    {
+        for (int j = 0; j < film->getHeight(); j++)
+        {
+            ratio.x += (float)(film->getPixelValue(i, j).x / perfectFilm->getPixelValue(i, j).x);
+            ratio.y += (float)(film->getPixelValue(i, j).y / perfectFilm->getPixelValue(i, j).y);
+            ratio.z += (float)(film->getPixelValue(i, j).z / perfectFilm->getPixelValue(i, j).z);
+        }
+    }
+
+    std::cout << ratio.x << " " << ratio.y << " " << ratio.z << std::endl;
 
     // Save the final result to file
     std::cout << "\n\nSaving the result to file output.bmp\n" << std::endl;
     film->save();
+    
+    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::seconds> (end - begin).count() << "[s]" << std::endl;
 
     std::cout << "\n\n" << std::endl;
     return 0;
