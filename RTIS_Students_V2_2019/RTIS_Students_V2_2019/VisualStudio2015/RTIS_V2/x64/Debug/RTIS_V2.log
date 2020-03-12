@@ -1,14 +1,5 @@
-﻿  directshader.cpp
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(54,26): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(59,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(110,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(115,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(191,23): warning C4244: 'initializing': conversion from 'const double' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(192,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(195,21): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(201,61): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(203,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(205,35): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(222,107): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(223,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  RTIS_V2.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe
+﻿  main.cpp
+c:\users\u124279\desktop\is\rtis_students_v2_2019\rtis_students_v2_2019\src\main.cpp(169): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\u124279\desktop\is\rtis_students_v2_2019\rtis_students_v2_2019\src\main.cpp(233): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\u124279\desktop\is\rtis_students_v2_2019\rtis_students_v2_2019\src\main.cpp(283): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  RTIS_V2.vcxproj -> C:\Users\u124279\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Debug\RTIS_V2.exe

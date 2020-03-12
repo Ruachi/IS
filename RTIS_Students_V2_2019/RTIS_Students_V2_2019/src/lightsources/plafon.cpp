@@ -38,6 +38,7 @@ void Plafon::distributeLights() const
 	float ySquareSize = this->height / this->numberLightsPerHeight;
 
 	Vector3D start = Vector3D(x, this->pos.y, y);
+	Vector3D aux = start;
 
 	for (int i = 0; i < this->numberLightsPerHeight; i++)
 	{
@@ -53,6 +54,7 @@ void Plafon::distributeLights() const
 			lightSourceList->push_back(light);
 			start.x += xSquareSize;
 		}
+		start.x = aux.x;
 		start.z += ySquareSize;
 	}
 }

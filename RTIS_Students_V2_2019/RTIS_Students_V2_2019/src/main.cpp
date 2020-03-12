@@ -135,8 +135,8 @@ void raytrace(Camera*& cam, DirectShader*& shader, Film*& film,
             Ray cameraRay = cam->generateRay(x, y);
 
             // Compute ray color according to the used shader
-            Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList, *p);
-            //Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
+            //Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList, *p);
+            Vector3D pixelColor = shader->computeColor(cameraRay, *objectsList, *lightSourceList);
 
             // Store the pixel color
             film->setPixelValue(col, lin, pixelColor);
@@ -230,7 +230,7 @@ void buildSceneCornellBox(Camera*& cam, Film*& film,
     int numberLightsPerHeight = 100;
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
 
-    plafonaco = new Plafon(Vector3D(-3, 2.5, 3), Vector3D(1, 1, 1), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
+    plafonaco = new Plafon(Vector3D(0, 2.5, 3), Vector3D(1, 1, 1), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
     plafonaco->distributeLights();
     lightSourceList = new std::vector<PointLightSource>;
 
@@ -246,7 +246,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     /* **************************** */
     /* Declare and place the camera */
     /* **************************** */
-    Matrix4x4 cameraToWorld = Matrix4x4::translate(Vector3D(0, 0, -3));
+    Matrix4x4 cameraToWorld = Matrix4x4::translate(Vector3D(0, 0, 0));
     double fovDegrees = 60;
     double fovRadians = Utils::degreesToRadians(fovDegrees);
     cam = new PerspectiveCamera(cameraToWorld, fovRadians, *film);
@@ -266,6 +266,7 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     Shape* bottomPlan = new InfinitePlane(Vector3D(0, -offset, 0), Vector3D(0, 1, 0), greyDiffuse);
     objectsList->push_back(bottomPlan);
 
+
     Matrix4x4 sphereTransform3;
     float radius = 1;
     sphereTransform3 = Matrix4x4::translate(Vector3D(0.3, -offset + radius, 5));
@@ -275,12 +276,12 @@ void buildSoftShadowScene(Camera*& cam, Film*& film,
     /* ****** */
     /* Lights */
     /* ****** */
-    int numberLightsPerWidth = 50;
-    int numberLightsPerHeight = 50;
+    int numberLightsPerWidth = 81;
+    int numberLightsPerHeight = 81;
     int totalNumberLights = numberLightsPerHeight * numberLightsPerWidth;
     lightSourceList = new std::vector<PointLightSource>;
 
-    areaLight = new Plafon(Vector3D(0, 10, 3), Vector3D(1, 1, 1), numberLightsPerWidth, numberLightsPerHeight, 6, 6);
+    areaLight = new Plafon(Vector3D(20, 30, 0), Vector3D(0.3, 0.3, 0.3), numberLightsPerWidth, numberLightsPerHeight, 10, 10);
     areaLight->distributeLights();
     for (int i = 0; i < totalNumberLights; i++)
     {
