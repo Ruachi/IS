@@ -316,7 +316,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
                             int index = 0;
                             for (int corner = 0; corner < 4; corner++) 
                             {
-                                position = corners[index] * p.getNumberLightsWidth() + corners[index+1];
+                                position = corners[index] * p.getNumberLightsWidth() + corners[index + 1];
                                 
                                 Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
                                 float d = wi.length();
@@ -332,20 +332,20 @@ Vector3D DirectShader::computeColor(const Ray& r,
                                         {
                                             counter++;
                                             finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
-                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));
                                         }
                                     }
                                     else 
                                     {
                                         int xStart = corners[index];
-                                        int yStart = corners[index+1];
+                                        int yStart = corners[index + 1];
 
                                         //left top
                                         if (index == 0) 
                                         {
-                                            for (int a = xStart; a< xStart+halfSize-1; a++) 
+                                            for (int a = xStart; a < xStart + halfSize - 1; a++) 
                                             {
-                                                for (int b = yStart; b > halfSize + 1; b--) 
+                                                for (int b = yStart; b <  yStart + halfSize - 1; b++) 
                                                 {
                                                     position = a * p.getNumberLightsWidth() + b;
                                                     Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
@@ -361,18 +361,18 @@ Vector3D DirectShader::computeColor(const Ray& r,
                                                         {
                                                             counter++;
                                                             finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
-                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));
                                                         }
                                                     }
                                                 }
                                             }
                                         }
                                         //rigth top
-                                        else if (index == 1) 
+                                        else if (index == 2) 
                                         {
-                                            for (int a = xStart; a> halfSize+1; a--) 
+                                            for (int a = xStart; a > xStart - halfSize; a--) 
                                             {
-                                                for (int b = yStart; b > halfSize +1; b--) 
+                                                for (int b = yStart; b > yStart - halfSize; b--) 
                                                 {
                                                     position = a * p.getNumberLightsWidth() + b;
                                                     Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
@@ -388,14 +388,14 @@ Vector3D DirectShader::computeColor(const Ray& r,
                                                         {
                                                             counter++;
                                                             finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
-                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));
                                                         }
                                                     }
                                                 }
                                             }
                                         }
                                         //left bottom
-                                        else if (index == 2) 
+                                        else if (index == 4) 
                                         {
                                             for (int a = xStart; a < xStart + halfSize - 1; a++)
                                             {
@@ -415,18 +415,18 @@ Vector3D DirectShader::computeColor(const Ray& r,
                                                         {
                                                             counter++;
                                                             finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
-                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                        //left bottom
-                                        else if (index == 3) 
+                                        //right bottom
+                                        else if (index == 6) 
                                         {
-                                            for (int a = xStart; a > halfSize + 1; a--)
+                                            for (int a = xStart; a > xStart - halfSize; a--)
                                             {
-                                                for (int b = yStart; b < yStart + halfSize - 1; b++)
+                                                for (int b = yStart; b > yStart - halfSize; b--)
                                                 {
                                                     position = a * p.getNumberLightsWidth() + b;
                                                     Vector3D wi = lsList.at(position).getPosition() - its.itsPoint;
@@ -442,7 +442,7 @@ Vector3D DirectShader::computeColor(const Ray& r,
                                                         {
                                                             counter++;
                                                             finalColor += Utils::multiplyPerCanal(lsList.at(position).getIntensity(its.itsPoint),
-                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));// *theta_y / sqrt(d);
+                                                                its.shape->getMaterial().getReflectance(its.normal, wo, wi));
                                                         }
                                                     }
                                                 }
@@ -454,11 +454,6 @@ Vector3D DirectShader::computeColor(const Ray& r,
                                 index++;
                             }
                             index = 0;
-                            
-
-
-
-
 
                             /*
                             //compute all points
