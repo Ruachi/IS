@@ -332,27 +332,28 @@ int main()
 
     // Launch some rays!
     raytrace(cam, directShader, film, objectsList, lightSourceList, areaLight, false);
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();   //tempo for non perfect film
-    raytrace(cam, directShader, perfectFilm, objectsList, lightSourceList, areaLight, true);
+    //std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();   //tempo for non perfect film
+    //raytrace(cam, directShader, perfectFilm, objectsList, lightSourceList, areaLight, true);
 
     Vector3D ratio = 0;
+    /*
     for (int i = 0; i < film->getWidth(); i++)
     {
         for (int j = 0; j < film->getHeight(); j++)
         {
-            ratio.x += (float)(film->getPixelValue(i, j).x / perfectFilm->getPixelValue(i, j).x);
-            ratio.y += (float)(film->getPixelValue(i, j).y / perfectFilm->getPixelValue(i, j).y);
-            ratio.z += (float)(film->getPixelValue(i, j).z / perfectFilm->getPixelValue(i, j).z);
+            ratio.x += (film->getPixelValue(i, j).x / perfectFilm->getPixelValue(i, j).x);
+            ratio.y += (film->getPixelValue(i, j).y / perfectFilm->getPixelValue(i, j).y);
+            ratio.z += (film->getPixelValue(i, j).z / perfectFilm->getPixelValue(i, j).z);
         }
     }
-
-    std::cout << ratio.x << " " << ratio.y << " " << ratio.z << std::endl;
+    */
+    //std::cout << ratio.x << " " << ratio.y << " " << ratio.z << std::endl;
 
     // Save the final result to file
     std::cout << "\n\nSaving the result to file output.bmp\n" << std::endl;
     film->save();
     
-    std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::seconds> (end - begin).count() << "[s]" << std::endl;
+    //std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::seconds> (end - begin).count() << "[s]" << std::endl;
 
     std::cout << "\n\n" << std::endl;
     return 0;

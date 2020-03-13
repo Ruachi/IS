@@ -1,10 +1,37 @@
 ﻿  main.cpp
-c:\users\u124279\desktop\is\rtis_students_v2_2019\rtis_students_v2_2019\src\main.cpp(169): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\u124279\desktop\is\rtis_students_v2_2019\rtis_students_v2_2019\src\main.cpp(233): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\u124279\desktop\is\rtis_students_v2_2019\rtis_students_v2_2019\src\main.cpp(284): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(176,68): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(240,90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(240,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(291,96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\main.cpp(291,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  directshader.cpp
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(55,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(60,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(131,23): warning C4244: 'initializing': conversion from 'const double' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(132,35): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(139,61): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(141,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(160,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(161,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(163,63): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(164,63): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(166,65): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(167,65): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(169,66): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(170,66): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(186,86): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(189,41): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(216,93): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(219,61): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(241,93): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(244,61): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(266,93): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(269,61): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(291,93): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\src\shaders\directshader.cpp(294,61): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  2 of 441 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  2 of 406 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    45 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  RTIS_V2.vcxproj -> C:\Users\u124279\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Release\RTIS_V2.exe
+  RTIS_V2.vcxproj -> C:\Users\david\Desktop\IS\RTIS_Students_V2_2019\RTIS_Students_V2_2019\VisualStudio2015\RTIS_V2\x64\Release\RTIS_V2.exe
